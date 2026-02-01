@@ -21,17 +21,17 @@
             background-color: white;
         }
 
-        /* Frog Cursor for everything interactive */
+        /* Frog Cursor */
         .kawaii-btn, .heart-btn {
             cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
         }
 
-        /* FIRST PAGE BACKGROUND */
+        /* PAGE 1 BACKGROUND */
         .tux-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-image: url('bg.png?v=8'); 
+            background-image: url('bg.png?v=9'); 
             background-size: 100% 100%;
             z-index: 1;
         }
@@ -100,35 +100,26 @@
             font-family: 'Gaegu', cursive; font-size: 2.8rem;
         }
 
-        /* SECOND PAGE (ITINERARY) BACKGROUND */
+        /* PAGE 2 BACKGROUND - TOTAL CLEANUP */
         #itin-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            /* YOUR NEW BACKGROUND bg2.png */
             background-image: url('bg2.png');
             background-size: 100% 100%;
             background-position: center;
-            display: none; flex-direction: column;
-            align-items: center; justify-content: center; z-index: 1000;
+            display: none; 
+            z-index: 1000;
         }
 
-        #itin-overlay h2 {
-            font-family: 'Playfair Display'; 
-            font-size: 3.5rem; 
-            color: var(--night-bordeaux); 
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.7); /* Light highlight for readability */
-            padding: 5px 20px;
-            border-radius: 50px;
+        /* Hiding the music player but keeping it functional */
+        #itinerary-music {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            opacity: 0.1; /* Barely visible so it doesn't distract */
+            width: 300px;
+            height: 80px;
+            border: none;
         }
-
-        #itin-overlay img { 
-            max-width: 80%; 
-            max-height: 70%;
-            border: 12px solid #fff; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
-        }
-        
-        .music-player { margin-top: 20px; width: 300px; height: 80px; }
     </style>
 </head>
 <body>
@@ -155,12 +146,7 @@
     </div>
 
     <div id="itin-overlay">
-        <h2>Our Date Itinerary 🪷</h2>
-        <img src="itinerary.png" alt="Our Date">
-        
-        <div class="music-player">
-            <iframe id="itinerary-music" style="border-radius:12px" src="" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-        </div>
+        <iframe id="itinerary-music" src="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
     </div>
 
     <script>
@@ -175,13 +161,12 @@
             document.getElementById('tux-speech').style.display = 'block';
             confetti({ particleCount: 400, spread: 150 });
             
-            // Wait 5 seconds, then switch to the Itinerary page
             setTimeout(() => {
                 const itin = document.getElementById('itin-overlay');
-                itin.style.display = 'flex';
+                itin.style.display = 'block';
                 
-                // Add your Spotify Song/Playlist ID here
-                document.getElementById('itinerary-music').src = "https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator&autoplay=1";
+                // Triggers the song you provided
+                document.getElementById('itinerary-music').src = "https://open.spotify.com/embed/track/8?utm_source=generator&autoplay=1";
             }, 5000);
         }
 
