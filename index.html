@@ -21,8 +21,8 @@
             background-color: white;
         }
 
-        /* The Frog Cursor */
-        .kawaii-btn, .heart-btn, .spotify-container {
+        /* Frog Cursor */
+        .kawaii-btn, .heart-btn {
             cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
         }
 
@@ -30,7 +30,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-image: url('bg.png?v=5'); 
+            background-image: url('bg.png?v=6'); 
             background-size: 100% 100%;
             z-index: 1;
         }
@@ -40,11 +40,11 @@
             top: 40px; right: 50px;
             width: 350px;
             z-index: 100;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(255, 255, 255, 0.9);
             border: 4px solid var(--tux-green);
             border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
         }
 
         .canvas-area {
@@ -74,11 +74,19 @@
             text-shadow: 2px 2px 0px white;
         }
 
-        .heart-btn { font-size: 130px; animation: heartbeat 1.2s infinite; }
+        .heart-btn { 
+            font-size: 140px; 
+            animation: heartbeat 1.2s infinite;
+            display: inline-block;
+            user-select: none;
+        }
         
         .tap-instruction { 
-            font-family: 'Gaegu', cursive; font-size: 2.2rem; 
-            color: var(--rosewood); font-weight: bold;
+            font-family: 'Gaegu', cursive; 
+            font-size: 2.2rem; 
+            color: var(--rosewood); 
+            font-weight: bold;
+            margin-top: 10px;
         }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
@@ -92,6 +100,7 @@
             background: var(--night-bordeaux); color: white; border: none;
             padding: 18px 60px; border-radius: 15px; 
             font-weight: 700; font-size: 2rem;
+            box-shadow: 0 4px 0px #3a0a18;
         }
 
         #tux-speech {
@@ -107,7 +116,7 @@
             background: white; display: none; flex-direction: column;
             align-items: center; justify-content: center; z-index: 1000;
         }
-        #itin-overlay img { max-width: 85%; border: 12px solid var(--white); }
+        #itin-overlay img { max-width: 85%; border: 12px solid white; }
     </style>
 </head>
 <body>
@@ -117,8 +126,7 @@
     <div id="tux-speech">Great choice! Ribbit! 🐸</div>
 
     <div class="spotify-container">
-        <p style="font-size: 1.1rem; margin: 0 0 10px; color: var(--night-bordeaux); font-weight: bold; text-align: center;">Our Love Language ♡</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1E8O63SInJ0V7S" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID?utm_source=generator" width="100%" height="152" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
     <div class="canvas-area">
@@ -126,7 +134,7 @@
 
         <div id="heartStage">
             <div class="heart-btn" onclick="revealAsk()">💖</div>
-            <p class="tap-instruction">tap to start drawing... <br>to u da real art but pls tap this heart</p>
+            <p class="tap-instruction">u da real art but pls tap this heart</p>
         </div>
 
         <div id="askStage" style="display:none;">
@@ -145,6 +153,7 @@
 
     <script>
         function revealAsk() {
+            // Force visible switch
             document.getElementById('heartStage').style.display = 'none';
             document.getElementById('askStage').style.display = 'block';
             confetti({ particleCount: 100, spread: 70 });
@@ -157,3 +166,13 @@
             setTimeout(() => {
                 document.getElementById('itin-overlay').style.display = 'flex';
             }, 5000);
+        }
+
+        function moveNo(btn) {
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * 80 + '%';
+            btn.style.top = Math.random() * 80 + '%';
+        }
+    </script>
+</body>
+</html>
