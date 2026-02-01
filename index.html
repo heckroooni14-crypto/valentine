@@ -6,71 +6,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --night-bordeaux: #590D22;
-            --tux-green: #77BC1F; 
-            --rosewood: #C9184A;
-        }
-
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            overflow: hidden; font-family: 'Montserrat', sans-serif; 
-            background: white;
-        }
-        
+        :root { --night-bordeaux: #590D22; --tux-green: #77BC1F; --rosewood: #C9184A; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: 'Montserrat', sans-serif; background: white; }
         .heart, .btn { cursor: pointer !important; }
-
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: 100% 100%; z-index: 1; }
         #page1-bg { background-image: url('bg.png'); display: block; }
         #page2-bg { background-image: url('bg2.png'); display: none; }
-
-        .main-ui {
-            position: relative; z-index: 10; width: 100vw; height: 100vh;
-            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
-        }
-
+        .main-ui { position: relative; z-index: 10; width: 100vw; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 3.5rem; color: var(--night-bordeaux); margin: 0; }
-
-        .heart { 
-            font-size: 150px; display: inline-block; animation: heartbeat 1.2s infinite; 
-            margin: 20px 0; position: relative; z-index: 999; pointer-events: auto !important;
-        }
-        
+        .heart { font-size: 150px; display: inline-block; animation: heartbeat 1.2s infinite; margin: 20px 0; position: relative; z-index: 999; }
         .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.2rem; color: var(--rosewood); font-weight: bold; }
-
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-        #question { 
-            font-family: 'Playfair Display', serif; font-style: italic;
-            font-size: 5.5rem; color: var(--tux-green); margin: 20px; font-weight: 700;
-            text-shadow: 2px 2px 0px white;
-        }
-
+        #question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 5.5rem; color: var(--tux-green); margin: 20px; font-weight: 700; text-shadow: 2px 2px 0px white; }
         .btn-group { display: flex; gap: 30px; justify-content: center; margin-top: 20px; }
-        .btn { 
-            padding: 20px 60px; font-size: 2rem; font-weight: bold; 
-            border-radius: 15px; border: none; background: var(--night-bordeaux); color: white;
-            box-shadow: 0 4px 0px #3a0a18;
-        }
-
-        #tux-speech {
-            position: fixed; bottom: 100px; left: 50px;
-            background: white; padding: 20px 30px;
-            border: 4px solid black; border-radius: 25px;
-            font-family: 'Gaegu', cursive; font-size: 2.5rem;
-            display: none; z-index: 1000;
-        }
+        .btn { padding: 20px 60px; font-size: 2rem; font-weight: bold; border-radius: 15px; border: none; background: var(--night-bordeaux); color: white; box-shadow: 0 4px 0px #3a0a18; }
+        #tux-speech { position: fixed; bottom: 100px; left: 50px; background: white; padding: 20px 30px; border: 4px solid black; border-radius: 25px; font-family: 'Gaegu', cursive; font-size: 2.5rem; display: none; z-index: 1000; }
+        #tux-speech:after { content: ''; position: absolute; bottom: -20px; left: 30px; border-width: 20px 20px 0; border-style: solid; border-color: black transparent transparent; }
     </style>
 </head>
 <body>
 
     <div id="page1-bg" class="bg"></div>
     <div id="page2-bg" class="bg"></div>
-
     <div id="tux-speech">Great choice! Ribbit! 🐸</div>
 
     <audio id="myFunnyValentine" loop>
-        <source src="https://ia800501.us.archive.org/11/items/cd_my-funny-valentine_chet-baker-stan-getz/disc1/01.%20Chet%20Baker%20-%20My%20Funny%20Valentine_sample.mp3" type="audio/mpeg">
+        <source src="song.mp3" type="audio/mpeg">
     </audio>
 
     <div class="main-ui">
@@ -79,7 +40,6 @@
             <div class="heart" onclick="showQuestion()">💖</div>
             <p class="tap-text">u da real art but pls tap this heart</p>
         </div>
-
         <div id="ask-section" style="display: none;">
             <h1 id="question">Will you be my Valentine? 🥺</h1>
             <div class="btn-group">
@@ -93,25 +53,19 @@
         const audio = document.getElementById("myFunnyValentine");
 
         function showQuestion() {
-            // Some browsers need a click here to "unlock" audio later
-            audio.play().then(() => {
-                audio.pause(); // Just unlocking the play permission
-                audio.currentTime = 0;
-            }).catch(e => console.log("Unlock required on next click"));
-
+            // "Unlock" the audio on first tap
+            audio.play().then(() => { audio.pause(); }).catch(e => console.log("Waiting for Yes click"));
             document.getElementById('heart-section').style.display = 'none';
             document.getElementById('ask-section').style.display = 'block';
             confetti({ particleCount: 150, spread: 70 });
         }
 
         function sayYes() {
-            audio.play(); // This should now work because of the previous clicks
-
+            audio.play(); 
             document.getElementById('tux-speech').style.display = 'block';
             document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
             document.getElementById('question').style.color = "#C9184A";
             confetti({ particleCount: 400, spread: 120 });
-
             setTimeout(() => {
                 document.getElementById('page1-bg').style.display = 'none';
                 document.getElementById('page2-bg').style.display = 'block';
