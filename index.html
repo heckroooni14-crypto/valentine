@@ -50,25 +50,22 @@
         .btn { 
             padding: 20px 60px; font-size: 2rem; font-weight: bold; 
             border-radius: 15px; border: none; background: var(--night-bordeaux); color: white;
-            box-shadow: 0 5px 0px #3a0a18;
+            box-shadow: 0 4px 0px #3a0a18;
         }
 
         /* TUX SPEECH BUBBLE */
         #tux-speech {
-            position: fixed; bottom: 120px; left: 80px;
-            background: white; padding: 25px 35px;
-            border-radius: 30px; border: 4px solid black;
+            position: fixed; bottom: 100px; left: 50px;
+            background: white; padding: 20px 30px;
+            border: 4px solid black; border-radius: 25px;
+            font-family: 'Gaegu', cursive; font-size: 2.5rem;
             display: none; z-index: 100;
-            font-family: 'Gaegu', cursive; font-size: 2.8rem;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.1);
         }
-        #tux-speech::after {
-            content: ''; position: absolute; bottom: -20px; left: 40px;
+        #tux-speech:after {
+            content: ''; position: absolute; bottom: -20px; left: 30px;
             border-width: 20px 20px 0; border-style: solid;
             border-color: black transparent transparent;
         }
-
-        #music-container { position: absolute; visibility: hidden; pointer-events: none; }
     </style>
 </head>
 <body>
@@ -78,7 +75,9 @@
 
     <div id="tux-speech">Great choice! Ribbit! 🐸</div>
 
-    <div id="music-container"></div>
+    <audio id="myFunnyValentine">
+        <source src="https://www.archive.org/download/ChetBakerMyFunnyValentine/Chet%20Baker%20-%20My%20Funny%20Valentine.mp3" type="audio/mpeg">
+    </audio>
 
     <div class="container">
         <div id="heart-section">
@@ -91,12 +90,14 @@
             <h1 id="question">Will you be my Valentine? 🥺</h1>
             <div class="btn-group">
                 <button class="btn" onclick="sayYes()">YES!</button>
-                <button class="btn" id="no-btn" style="background: #444;" onmouseover="moveNo()">NO</button>
+                <button class="btn" id="no-btn" onmouseover="moveNo()">NO</button>
             </div>
         </div>
     </div>
 
     <script>
+        const audio = document.getElementById("myFunnyValentine");
+
         function showQuestion() {
             document.getElementById('heart-section').style.display = 'none';
             document.getElementById('ask-section').style.display = 'block';
@@ -104,30 +105,15 @@
         }
 
         function sayYes() {
-            // SHOW SPEECH
+            // PLAY SONG IMMEDIATELY
+            audio.play().catch(e => console.log("Audio trigger blocked"));
+
             document.getElementById('tux-speech').style.display = 'block';
             document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
             document.getElementById('question').style.color = "#C9184A";
             confetti({ particleCount: 400, spread: 120 });
 
-            // START MUSIC - Direct Embed for better autoplay
-            const musicBox = document.getElementById('music-container');
-            musicBox.innerHTML = `<iframe width="1" height="1" src="https://www.youtube.com/embed/jvXywhJpOKs?autoplay=1" frameborder="0" allow="autoplay"></iframe>`;
-
             setTimeout(() => {
                 document.getElementById('page1-bg').style.display = 'none';
                 document.getElementById('page2-bg').style.display = 'block';
-                document.getElementById('ask-section').style.display = 'none';
-                document.getElementById('tux-speech').style.display = 'none';
-            }, 5000);
-        }
-
-        function moveNo() {
-            const btn = document.getElementById('no-btn');
-            btn.style.position = 'fixed';
-            btn.style.left = Math.random() * 80 + '%';
-            btn.style.top = Math.random() * 80 + '%';
-        }
-    </script>
-</body>
-</html>
+                document.
