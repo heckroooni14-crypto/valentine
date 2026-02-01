@@ -31,17 +31,7 @@
             overflow-x: hidden;
         }
 
-        /* Top Header */
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.2rem;
-            color: var(--dark-amaranth);
-            margin: 40px 0 10px;
-            text-shadow: 2px 2px var(--white), 4px 4px rgba(255, 117, 143, 0.3);
-            z-index: 10;
-        }
-
-        /* Floating Spotify Right Corner */
+        /* Spotify - Top Right */
         .spotify-container {
             position: fixed;
             top: 20px;
@@ -56,10 +46,20 @@
             z-index: 100;
         }
 
-        /* 5-Photo Gallery */
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            color: var(--dark-amaranth);
+            margin: 60px 0 10px;
+            text-shadow: 2px 2px var(--white);
+            z-index: 10;
+            text-align: center;
+        }
+
+        /* 6-Photo Gallery */
         .gallery-container {
             display: flex;
-            gap: 20px;
+            gap: 15px;
             overflow-x: auto;
             width: 95%;
             padding: 40px 20px;
@@ -68,14 +68,14 @@
         .gallery-container::-webkit-scrollbar { display: none; }
 
         .photo-card {
-            min-width: 220px;
-            height: 280px;
+            min-width: 200px;
+            height: 260px;
             background: white;
-            padding: 12px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 8px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.08);
             transform: rotate(var(--r));
-            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: 0.4s ease;
             border: 1px solid var(--soft-pink);
             flex-shrink: 0;
         }
@@ -84,98 +84,93 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 5px;
+            border-radius: 4px;
         }
 
-        .photo-card:hover { transform: rotate(0deg) scale(1.05); z-index: 5; }
+        .photo-card:hover { transform: rotate(0deg) scale(1.1); z-index: 5; }
 
-        /* Big Heart Section */
+        /* Heart Section */
         .heart-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin: 20px 0;
+            margin: 30px 0;
         }
 
         .heart-btn {
-            font-size: 120px; /* Increased size */
+            font-size: 140px;
             cursor: pointer;
             animation: heartbeat 1.2s infinite;
             filter: drop-shadow(0 0 15px var(--bubblegum));
-            transition: transform 0.2s;
+            user-select: none;
         }
 
-        .heart-btn:active { transform: scale(0.8); }
-
         .tap-instruction {
-            margin-top: 10px;
+            margin-top: 15px;
             font-weight: bold;
             color: var(--rosewood);
-            letter-spacing: 1px;
-            font-size: 1.1rem;
+            font-size: 1.2rem; /* Slightly larger for the cute text */
             animation: fadeInOut 2s infinite;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.15); }
+            50% { transform: scale(1.1); }
         }
 
         @keyframes fadeInOut {
-            0%, 100% { opacity: 0.3; }
+            0%, 100% { opacity: 0.4; }
             50% { opacity: 1; }
         }
 
-        /* Buttons */
-        #ask { display: none; text-align: center; margin-top: 20px; }
+        /* Question & Buttons */
+        #ask { display: none; text-align: center; margin-bottom: 50px; }
         
         .kawaii-btn {
             background: var(--rosewood);
             color: white;
             border: none;
-            padding: 18px 50px;
+            padding: 15px 45px;
             border-radius: 50px;
             font-family: 'Quicksand', sans-serif;
             font-weight: bold;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             cursor: pointer;
             box-shadow: 0 5px 0 var(--night-bordeaux);
             margin: 10px;
-            transition: 0.2s;
         }
 
-        .kawaii-btn:hover { background: var(--cherry-rose); }
-
         @media (max-width: 768px) {
-            .spotify-container { position: relative; top: 0; right: 0; width: 90%; margin: 10px auto; }
-            h1 { font-size: 2.2rem; margin-top: 80px; }
+            .spotify-container { position: relative; top: 0; right: 0; width: 90%; margin: 20px auto; }
+            h1 { font-size: 2.2rem; margin-top: 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="spotify-container">
-        <p style="font-size: 0.75rem; margin: 0 0 8px 5px; font-weight: bold; color: var(--dark-amaranth);">MUSIC THAT REMINDS ME OF YOU ♡</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID_HERE?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <p style="font-size: 0.7rem; margin: 0 0 5px 5px; font-weight: bold; color: var(--dark-amaranth);">MUSIC THAT REMINDS ME OF YOU ♡</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
     <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
 
     <div class="gallery-container">
-        <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/220x280/590D22/ffffff?text=Us+1" alt="us"></div>
-        <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/220x280/800F2F/ffffff?text=Us+2" alt="us"></div>
-        <div class="photo-card" style="--r: -1deg;"><img src="https://via.placeholder.com/220x280/A4133C/ffffff?text=Us+3" alt="us"></div>
-        <div class="photo-card" style="--r: 3deg;"><img src="https://via.placeholder.com/220x280/C9184A/ffffff?text=Us+4" alt="us"></div>
-        <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/220x280/FF4D6D/ffffff?text=Us+5" alt="us"></div>
+        <div class="photo-card" style="--r: -4deg;"><img src="https://via.placeholder.com/200x260/590D22/ffffff?text=Photo+1" alt="us"></div>
+        <div class="photo-card" style="--r: 3deg;"><img src="https://via.placeholder.com/200x260/800F2F/ffffff?text=Photo+2" alt="us"></div>
+        <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/200x260/A4133C/ffffff?text=Photo+3" alt="us"></div>
+        <div class="photo-card" style="--r: 5deg;"><img src="https://via.placeholder.com/200x260/C9184A/ffffff?text=Photo+4" alt="us"></div>
+        <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/200x260/FF4D6D/ffffff?text=Photo+5" alt="us"></div>
+        <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/200x260/FF758F/ffffff?text=Photo+6" alt="us"></div>
     </div>
 
     <div class="heart-wrapper" id="heartWrapper">
         <div class="heart-btn" onclick="reveal()">💖</div>
-        <p class="tap-instruction">TAP THE HEART SPECIFICALLY ✨</p>
+        <p class="tap-instruction">u tap my heart :3</p>
     </div>
 
     <div id="ask">
-        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; color: var(--night-bordeaux); margin-bottom: 20px;">Will you be my Valentine? 🥺</h2>
+        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; color: var(--night-bordeaux); margin-bottom: 20px;">Will you be my Valentine? 🥺</h2>
         <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
         <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
     </div>
