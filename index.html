@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Mendhak</title>
+    <title>For My Mendhak 🐸</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -19,172 +19,195 @@
 
         body {
             background: var(--white);
-            background-image: radial-gradient(var(--soft-pink) 1px, transparent 1px);
-            background-size: 30px 30px; /* Kawaii dot pattern */
+            background-image: radial-gradient(var(--soft-pink) 0.5px, transparent 0.5px);
+            background-size: 20px 20px;
             font-family: 'Quicksand', sans-serif;
             color: var(--night-bordeaux);
             margin: 0;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 100px;
         }
 
+        /* Top Header */
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             color: var(--dark-amaranth);
             margin: 40px 0 10px;
-            text-shadow: 2px 2px var(--soft-pink);
+            text-shadow: 2px 2px var(--white), 4px 4px rgba(255, 117, 143, 0.3);
+            z-index: 10;
         }
 
-        /* Spotify Player */
+        /* Floating Spotify Right Corner */
         .spotify-container {
-            width: 300px;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
             border-radius: 20px;
-            padding: 15px;
+            padding: 12px;
             border: 2px solid var(--bubblegum);
-            margin-bottom: 30px;
-            box-shadow: 0 8px 16px rgba(128, 15, 47, 0.1);
+            box-shadow: 0 8px 20px rgba(128, 15, 47, 0.15);
+            z-index: 100;
         }
 
-        /* Photo Gallery */
+        /* 5-Photo Gallery */
         .gallery-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             overflow-x: auto;
-            width: 90%;
-            padding: 20px;
+            width: 95%;
+            padding: 40px 20px;
             scrollbar-width: none;
         }
-        
         .gallery-container::-webkit-scrollbar { display: none; }
 
         .photo-card {
-            min-width: 200px;
-            height: 250px;
+            min-width: 220px;
+            height: 280px;
             background: white;
-            padding: 10px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            padding: 12px;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
             transform: rotate(var(--r));
-            transition: 0.3s;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 1px solid var(--soft-pink);
+            flex-shrink: 0;
         }
 
         .photo-card img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 10px;
+            border-radius: 5px;
         }
 
-        .photo-card:hover {
-            transform: rotate(0deg) scale(1.1);
-            z-index: 10;
+        .photo-card:hover { transform: rotate(0deg) scale(1.05); z-index: 5; }
+
+        /* Big Heart Section */
+        .heart-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
         }
 
-        /* Main Interaction */
         .heart-btn {
-            font-size: 80px;
+            font-size: 120px; /* Increased size */
             cursor: pointer;
-            animation: heartbeat 1.5s infinite;
-            user-select: none;
-            margin: 30px 0;
-            filter: drop-shadow(0 0 10px var(--bubblegum));
+            animation: heartbeat 1.2s infinite;
+            filter: drop-shadow(0 0 15px var(--bubblegum));
+            transition: transform 0.2s;
+        }
+
+        .heart-btn:active { transform: scale(0.8); }
+
+        .tap-instruction {
+            margin-top: 10px;
+            font-weight: bold;
+            color: var(--rosewood);
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+            animation: fadeInOut 2s infinite;
         }
 
         @keyframes heartbeat {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-            100% { transform: scale(1); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
-        .btn-group {
-            display: none;
-            gap: 20px;
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
+        /* Buttons */
+        #ask { display: none; text-align: center; margin-top: 20px; }
+        
         .kawaii-btn {
             background: var(--rosewood);
             color: white;
             border: none;
-            padding: 15px 40px;
+            padding: 18px 50px;
             border-radius: 50px;
             font-family: 'Quicksand', sans-serif;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--night-bordeaux);
-            transition: 0.1s;
+            box-shadow: 0 5px 0 var(--night-bordeaux);
+            margin: 10px;
+            transition: 0.2s;
         }
 
-        .kawaii-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 0 0;
-        }
+        .kawaii-btn:hover { background: var(--cherry-rose); }
 
-        /* Custom Icon Slots */
-        .pinterest-icon {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            opacity: 0.8;
-            pointer-events: none;
+        @media (max-width: 768px) {
+            .spotify-container { position: relative; top: 0; right: 0; width: 90%; margin: 10px auto; }
+            h1 { font-size: 2.2rem; margin-top: 80px; }
         }
     </style>
 </head>
 <body>
 
-    <h1 id="title">For My Favorite Person 🎀</h1>
-
     <div class="spotify-container">
-        <p style="font-size: 0.8rem; margin-bottom: 8px; font-weight: bold;">OUR PLAYLIST <3</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_SPOTIFY_ID?utm_source=generator&theme=0" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <p style="font-size: 0.75rem; margin: 0 0 8px 5px; font-weight: bold; color: var(--dark-amaranth);">MUSIC THAT REMINDS ME OF YOU ♡</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID_HERE?utm_source=generator" width="100%" height="80" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
+
+    <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
 
     <div class="gallery-container">
-        <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/200x250/FF4D6D/ffffff?text=US+1" alt="us"></div>
-        <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/200x250/800F2F/ffffff?text=US+2" alt="us"></div>
-        <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/200x250/FF758F/ffffff?text=US+3" alt="us"></div>
-        <div class="photo-card" style="--r: 4deg;"><img src="https://via.placeholder.com/200x250/A4133C/ffffff?text=US+4" alt="us"></div>
+        <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/220x280/590D22/ffffff?text=Us+1" alt="us"></div>
+        <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/220x280/800F2F/ffffff?text=Us+2" alt="us"></div>
+        <div class="photo-card" style="--r: -1deg;"><img src="https://via.placeholder.com/220x280/A4133C/ffffff?text=Us+3" alt="us"></div>
+        <div class="photo-card" style="--r: 3deg;"><img src="https://via.placeholder.com/220x280/C9184A/ffffff?text=Us+4" alt="us"></div>
+        <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/220x280/FF4D6D/ffffff?text=Us+5" alt="us"></div>
     </div>
 
-    <div class="heart-btn" id="bigHeart" onclick="reveal()">💖</div>
+    <div class="heart-wrapper" id="heartWrapper">
+        <div class="heart-btn" onclick="reveal()">💖</div>
+        <p class="tap-instruction">TAP THE HEART SPECIFICALLY ✨</p>
+    </div>
 
-    <div id="ask" style="display:none; text-align: center;">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; color: var(--cherry-rose);">Will you be my Valentine? 🥺</h2>
-        <div class="btn-group" id="btns" style="display:flex;">
-            <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
-            <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
-        </div>
+    <div id="ask">
+        <h2 style="font-family: 'Dancing Script'; font-size: 3rem; color: var(--night-bordeaux); margin-bottom: 20px;">Will you be my Valentine? 🥺</h2>
+        <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
+        <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
     </div>
 
     <script>
         function reveal() {
-            document.getElementById('bigHeart').style.display = 'none';
+            document.getElementById('heartWrapper').style.display = 'none';
             document.getElementById('ask').style.display = 'block';
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#FF4D6D', '#800F2F'] });
+            confetti({ 
+                particleCount: 150, 
+                spread: 70, 
+                origin: { y: 0.6 }, 
+                colors: ['#590D22', '#800F2F', '#FF758F'] 
+            });
         }
 
         function celebrate() {
-            document.querySelector('h2').innerHTML = "I LOVE YOU!";
-            document.getElementById('btns').style.display = 'none';
-            var end = Date.now() + (5 * 1000);
-            (function frame() {
-                confetti({ particleCount: 2, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#FF4D6D', '#A4133C'] });
-                confetti({ particleCount: 2, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#FF4D6D', '#A4133C'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
+            document.querySelector('h2').innerHTML = "YAY! I LOVE YOU MENDHAK! 🐸💕";
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 0.6 },
+                colors: ['#FFD700', '#FF4D6D', '#A4133C']
+            });
         }
 
         function moveNo(btn) {
+            const x = Math.random() * (window.innerWidth - btn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - btn.offsetHeight);
             btn.style.position = 'absolute';
-            btn.style.top = Math.random() * (window.innerHeight - 50) + 'px';
-            btn.style.left = Math.random() * (window.innerWidth - 100) + 'px';
+            btn.style.left = x + 'px';
+            btn.style.top = y + 'px';
         }
     </script>
 </body>
