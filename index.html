@@ -70,4 +70,124 @@
 
         #question { 
             font-family: 'Playfair Display', serif; font-style: italic; 
-            font-size: clamp(2rem, 8vw, 4.5rem);
+            font-size: clamp(2rem, 8vw, 4.5rem); color: var(--tux-green); 
+            margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; 
+        }
+
+        .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+        
+        .btn { 
+            padding: 15px 40px; font-size: 1.5rem; font-weight: bold; 
+            border-radius: 12px; border: none; background: var(--night-bordeaux); 
+            color: white; cursor: pointer; box-shadow: 0 4px 0px #3a0a18;
+            transition: transform 0.1s;
+        }
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+    </style>
+</head>
+<body>
+
+    <div class="game-viewport">
+        <div id="main-bg"></div>
+
+        <audio id="myFunnyValentine" loop preload="auto">
+            <source src="song.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="ui-layer">
+            <div id="heart-section">
+                <h1 id="main-title">for my mendhak...</h1>
+                <div class="heart" id="evolving-heart" onclick="evolveHeart()">🤍</div>
+                <p class="tap-text" id="status-text">tap the heart to start</p>
+            </div>
+
+            <div id="ask-section" style="display: none;">
+                <h1 id="question">Will you be my Valentine? 🥺</h1>
+                <div class="btn-group">
+                    <button class="btn" onclick="sayYes()">YES!</button>
+                    <button class="btn" id="no-btn" onmouseover="moveNo()" onclick="moveNo()">NO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audio = document.getElementById("myFunnyValentine");
+        let clickCount = 0;
+        
+        // Evolution Stages
+        const stages = [
+            { heart: "🤍", text: "tap the heart to start", title: "for my mendhak..." },
+            { heart: "💖", text: "getting warmer...", title: "keep going..." },
+            { heart: "💝", text: "it's growing!", title: "almost there..." },
+            { heart: "💗", text: "so much love!", title: "one more tap!" },
+            { heart: "❤️", text: "READY!", title: "I HAVE A QUESTION!" }
+        ];
+
+        function evolveHeart() {
+            clickCount++;
+            
+            // Start music on first tap
+            if(clickCount === 1) {
+                audio.play().catch(e => console.log("Audio waiting for interaction"));
+            }
+
+            const heart = document.getElementById('evolving-heart');
+            const status = document.getElementById('status-text');
+            const title = document.getElementById('main-title');
+
+            if (clickCount < stages.length) {
+                heart.innerHTML = stages[clickCount].heart;
+                status.innerHTML = stages[clickCount].text;
+                title.innerHTML = stages[clickCount].title;
+                
+                // Pop animation
+                heart.style.transform = `scale(${1 + clickCount * 0.15})`;
+                confetti({ 
+                    particleCount: 25, 
+                    spread: 50, 
+                    origin: { y: 0.6 },
+                    colors: ['#C9184A', '#590D22', '#ffb3c1']
+                });
+            } else {
+                // Trigger the Question
+                document.getElementById('heart-section').style.display = 'none';
+                document.getElementById('ask-section').style.display = 'block';
+                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+            }
+        }
+
+        function sayYes() {
+            // Instant background swap
+            document.getElementById('main-bg').style.backgroundImage = "url('bg2.png')";
+            
+            // Final UI Update
+            document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
+            document.getElementById('question').style.color = "#C9184A";
+            
+            // Grand Finale Confetti
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
+              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+              if (Date.now() < end) { requestAnimationFrame(frame); }
+            }());
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            const viewport = document.querySelector('.game-viewport');
+            
+            // Keep the button inside the visible Tux Paint area
+            const maxX = viewport.clientWidth - btn.clientWidth - 20;
+            const maxY = viewport.clientHeight - btn.clientHeight - 20;
+            
+            btn.style.position = 'absolute';
+            btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
+            btn.style.top = Math.max(10, Math.random() * maxY) + 'px';
+        }
+    </script>
+</body>
+</html>
