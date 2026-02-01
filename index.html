@@ -21,7 +21,8 @@
             background-color: white;
         }
 
-        .kawaii-btn, .heart-btn {
+        /* Frog Cursor */
+        .kawaii-btn, #heartStage {
             cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
         }
 
@@ -29,7 +30,7 @@
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-image: url('bg.png?v=10'); 
+            background-image: url('bg.png?v=11'); 
             background-size: 100% 100%;
             z-index: 1;
         }
@@ -38,7 +39,7 @@
             position: absolute;
             top: 15%; left: 13%;    
             width: 73%; height: 60%;  
-            z-index: 2;
+            z-index: 10; /* Put this higher to ensure it's clickable */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -61,8 +62,29 @@
             text-shadow: 2px 2px 0px white;
         }
 
-        .heart-btn { font-size: 150px; animation: heartbeat 1.2s infinite; display: inline-block; }
-        .tap-instruction { font-family: 'Gaegu', cursive; font-size: 2.5rem; color: var(--rosewood); font-weight: bold; margin-top: 15px; }
+        /* Wrapped the heart and text together so the whole thing is a button */
+        #heartStage {
+            display: inline-block;
+            margin-top: 20px;
+            transition: transform 0.3s;
+        }
+        #heartStage:hover { transform: scale(1.05); }
+
+        .heart-btn { 
+            font-size: 150px; 
+            animation: heartbeat 1.2s infinite;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .tap-instruction { 
+            font-family: 'Gaegu', cursive; 
+            font-size: 2.5rem; 
+            color: var(--rosewood); 
+            font-weight: bold;
+            margin-top: 15px;
+            pointer-events: none; /* Allows click to pass through to the heartStage */
+        }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
@@ -79,11 +101,10 @@
             position: fixed; bottom: 150px; left: 100px;
             background: white; padding: 25px 35px;
             border-radius: 30px; border: 4px solid black;
-            display: none; z-index: 10;
+            display: none; z-index: 20;
             font-family: 'Gaegu', cursive; font-size: 2.8rem;
         }
 
-        /* PAGE 2 - ITINERARY BG */
         #itin-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: url('bg2.png');
@@ -93,10 +114,9 @@
             z-index: 1000;
         }
 
-        /* Hidden Spotify Player */
         #itinerary-music {
             position: absolute;
-            bottom: -500px; /* Moves it completely off screen */
+            bottom: -1000px;
             visibility: hidden;
         }
     </style>
@@ -108,18 +128,12 @@
 
     <div class="canvas-area">
         <h1>for my mendhak...</h1>
-        <div id="heartStage">
-            <div class="heart-btn" onclick="revealAsk()">💖</div>
+
+        <div id="heartStage" onclick="revealAsk()">
+            <div class="heart-btn">💖</div>
             <p class="tap-instruction">u da real art but pls tap this heart</p>
         </div>
+
         <div id="askStage" style="display:none;">
             <div id="valentine-question">Will you be my Valentine? 🥺</div>
-            <div class="button-group">
-                <button class="kawaii-btn" onclick="celebrate()">YES!</button>
-                <button class="kawaii-btn" id="noBtn" style="background: #444;" onmouseover="moveNo(this)">NO</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="itin-overlay">
-        <iframe id="itinerary
+            <div class="
