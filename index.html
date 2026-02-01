@@ -66,17 +66,15 @@
             margin: 0;
         }
 
-        /* Spotify - Top Right of Canvas */
         .spotify-container {
             width: 260px;
             background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #77BC1F; /* Tux Paint green */
+            border: 2px solid #77BC1F; 
             border-radius: 15px;
             padding: 8px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
-        /* 6-Photo Gallery */
         .gallery-container {
             display: flex;
             gap: 12px;
@@ -97,3 +95,122 @@
             transform: rotate(var(--r));
             transition: 0.3s;
             border: 1px solid var(--soft-pink);
+            flex-shrink: 0;
+        }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
+
+        .heart-btn {
+            font-size: 100px;
+            cursor: pointer;
+            animation: heartbeat 1.2s infinite;
+            user-select: none;
+        }
+        .tap-instruction {
+            font-family: 'Gaegu', cursive;
+            font-weight: bold;
+            color: var(--rosewood);
+            font-size: 1.4rem;
+            margin-top: -10px;
+        }
+
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+
+        .kawaii-btn {
+            background: var(--rosewood);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 5px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            margin: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        #itin-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: white;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        #itin-overlay img { 
+            max-width: 85%; 
+            max-height: 75%; 
+            border: 8px solid var(--white);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tux-bg"></div>
+
+    <div class="canvas-area" id="mainContent">
+        <div class="spotify-container">
+            <p style="font-size: 0.7rem; margin: 0 0 5px; font-weight: 500; color: #555;">music that reminds me of you ♡</p>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1E8O6p6QzYn6Xk" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+        </div>
+
+        <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
+
+        <div class="gallery-container">
+            <div class="photo-card" style="--r: -4deg;"><img src="photo1.jpg"></div>
+            <div class="photo-card" style="--r: 3deg;"><img src="photo2.jpg"></div>
+            <div class="photo-card" style="--r: -2deg;"><img src="photo3.jpg"></div>
+            <div class="photo-card" style="--r: 5deg;"><img src="photo4.jpg"></div>
+            <div class="photo-card" style="--r: -3deg;"><img src="photo5.jpg"></div>
+            <div class="photo-card" style="--r: 2deg;"><img src="photo6.jpg"></div>
+        </div>
+
+        <div id="heartStage" style="text-align: center;">
+            <div class="heart-btn" onclick="revealAsk()">💖</div>
+            <p class="tap-instruction">u tap my heart :3</p>
+        </div>
+
+        <div id="askStage" style="display:none; text-align: center;">
+            <h2 id="msg" style="font-family: 'Playfair Display';">Will you be my Valentine?</h2>
+            <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
+            <button class="kawaii-btn" id="noBtn" style="background: var(--night-bordeaux);" onmouseover="moveNo(this)">No</button>
+        </div>
+    </div>
+
+    <div id="itin-overlay">
+        <h2 style="font-family: 'Playfair Display'; color: var(--dark-amaranth);">our itinerary .𓏲⊹₊˚🪷.˚₊𓆏</h2>
+        <img src="itinerary.png" alt="Our Date">
+        <p style="margin-top: 15px; font-style: italic;">I can't wait! ♡</p>
+    </div>
+
+    <script>
+        function revealAsk() {
+            document.getElementById('heartStage').style.display = 'none';
+            document.getElementById('askStage').style.display = 'block';
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+        }
+
+        function celebrate() {
+            document.getElementById('msg').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+
+            setTimeout(() => {
+                const itin = document.getElementById('itin-overlay');
+                itin.style.display = 'flex';
+                setTimeout(() => { itin.style.opacity = '1'; }, 50);
+            }, 5000);
+        }
+
+        function moveNo(btn) {
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * 70 + '%';
+            btn.style.top = Math.random() * 70 + '%';
+        }
+    </script>
+</body>
+</html>
