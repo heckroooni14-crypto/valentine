@@ -10,7 +10,6 @@
         :root {
             --night-bordeaux: #590D22;
             --dark-amaranth: #800F2F;
-            --cherry-rose: #A4133C;
             --rosewood: #C9184A;
             --bubblegum: #FF4D6D;
             --soft-pink: #FF758F;
@@ -18,135 +17,78 @@
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
+            margin: 0; padding: 0;
+            width: 100vw; height: 100vh;
             overflow: hidden;
             background-color: #f0f0f0;
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* --- THE TUX PAINT BACKGROUND --- */
+        /* --- UPDATED BACKGROUND LINK --- */
         .tux-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('https://pagedemos.com/image_40e1f2.png'); 
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            /* Uses the exact name from your GitHub screenshot */
+            background-image: url('Screenshot%202026-02-01%20174203.png'); 
             background-size: 100% 100%;
             background-repeat: no-repeat;
             z-index: 1;
         }
 
-        /* --- THE CENTER CANVAS AREA --- */
         .canvas-area {
             position: absolute;
-            top: 15%;     
-            left: 13%;    
-            width: 73%;   
-            height: 65%;  
+            top: 15%; left: 13%;    
+            width: 73%; height: 65%;  
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
             text-align: center;
-            overflow-y: auto;
-            scrollbar-width: none;
         }
-        .canvas-area::-webkit-scrollbar { display: none; }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-style: italic;
-            font-size: 2.2rem;
-            color: var(--dark-amaranth);
-            margin: 0;
+            font-style: italic; font-size: 2.2rem;
+            color: var(--dark-amaranth); margin: 0;
         }
 
         .spotify-container {
-            width: 260px;
-            background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #77BC1F; 
-            border-radius: 15px;
-            padding: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 260px; background: rgba(255, 255, 255, 0.9);
+            border: 2px solid #77BC1F; border-radius: 15px; padding: 8px;
         }
 
         .gallery-container {
-            display: flex;
-            gap: 12px;
-            width: 100%;
-            overflow-x: auto;
-            padding: 15px 5px;
-            scrollbar-width: none;
+            display: flex; gap: 12px; width: 100%;
+            overflow-x: auto; padding: 15px 5px; scrollbar-width: none;
         }
-        .gallery-container::-webkit-scrollbar { display: none; }
 
         .photo-card {
-            min-width: 150px;
-            height: 200px;
-            background: white;
-            padding: 8px;
-            border-radius: 2px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transform: rotate(var(--r));
-            transition: 0.3s;
-            border: 1px solid var(--soft-pink);
+            min-width: 150px; height: 200px;
+            background: white; padding: 8px;
+            border: 1px solid var(--soft-pink); transform: rotate(var(--r));
             flex-shrink: 0;
         }
         .photo-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .heart-btn {
-            font-size: 100px;
-            cursor: pointer;
-            animation: heartbeat 1.2s infinite;
-            user-select: none;
-        }
-        .tap-instruction {
-            font-family: 'Gaegu', cursive;
-            font-weight: bold;
-            color: var(--rosewood);
-            font-size: 1.4rem;
-            margin-top: -10px;
-        }
+        .heart-btn { font-size: 100px; cursor: pointer; animation: heartbeat 1.2s infinite; }
+        .tap-instruction { font-family: 'Gaegu', cursive; font-weight: bold; color: var(--rosewood); font-size: 1.4rem; }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
         .kawaii-btn {
-            background: var(--rosewood);
-            color: white;
-            border: none;
-            padding: 12px 35px;
-            border-radius: 5px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            margin: 5px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            background: var(--rosewood); color: white; border: none;
+            padding: 12px 35px; border-radius: 5px; cursor: pointer; margin: 5px;
         }
 
         #itin-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100vw; height: 100vh;
-            background: white;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 1s ease;
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: white; display: none; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 1000;
+            opacity: 0; transition: opacity 1s ease;
         }
-        #itin-overlay img { 
-            max-width: 85%; 
-            max-height: 75%; 
-            border: 8px solid var(--white);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-        }
+        #itin-overlay img { max-width: 85%; max-height: 75%; border: 8px solid white; }
     </style>
 </head>
 <body>
@@ -155,8 +97,8 @@
 
     <div class="canvas-area" id="mainContent">
         <div class="spotify-container">
-            <p style="font-size: 0.7rem; margin: 0 0 5px; font-weight: 500; color: #555;">music that reminds me of you ♡</p>
-            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1E8O6p6QzYn6Xk" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+            <p style="font-size: 0.7rem; margin: 0 0 5px; color: #555;">music that reminds me of you ♡</p>
+            <iframe style="border-radius:12px" src="http://googleusercontent.com/spotify.com/8" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
         </div>
 
         <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
@@ -170,12 +112,12 @@
             <div class="photo-card" style="--r: 2deg;"><img src="photo6.jpg"></div>
         </div>
 
-        <div id="heartStage" style="text-align: center;">
+        <div id="heartStage">
             <div class="heart-btn" onclick="revealAsk()">💖</div>
             <p class="tap-instruction">u tap my heart :3</p>
         </div>
 
-        <div id="askStage" style="display:none; text-align: center;">
+        <div id="askStage" style="display:none;">
             <h2 id="msg" style="font-family: 'Playfair Display';">Will you be my Valentine?</h2>
             <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
             <button class="kawaii-btn" id="noBtn" style="background: var(--night-bordeaux);" onmouseover="moveNo(this)">No</button>
@@ -198,7 +140,6 @@
         function celebrate() {
             document.getElementById('msg').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
             confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
-
             setTimeout(() => {
                 const itin = document.getElementById('itin-overlay');
                 itin.style.display = 'flex';
