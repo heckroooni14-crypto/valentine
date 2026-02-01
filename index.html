@@ -18,63 +18,59 @@
             width: 100vw; height: 100vh;
             overflow: hidden;
             font-family: 'Montserrat', sans-serif;
-            background-color: white;
+            background-color: #fff;
         }
 
-        /* Frog Cursor */
-        .kawaii-btn, #heartStage {
+        /* The Frog Cursor */
+        .kawaii-btn, #heartStage, .heart-btn {
             cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
         }
 
+        /* PAGE 1 BACKGROUND */
         .tux-bg {
-            position: fixed;
+            position: absolute;
             top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background-image: url('bg.png?v=11'); 
+            width: 100%; height: 100%;
+            background-image: url('bg.png?v=12'); 
             background-size: 100% 100%;
-            z-index: 1;
+            z-index: 1; /* Lowest Layer */
         }
 
+        /* THE MAIN INTERACTION AREA */
         .canvas-area {
-            position: absolute;
-            top: 15%; left: 13%;    
-            width: 73%; height: 60%;  
-            z-index: 10; /* Put this higher to ensure it's clickable */
+            position: relative;
+            width: 100vw; height: 100vh;
+            z-index: 10; /* Middle Layer */
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            pointer-events: none; /* Let clicks pass through the box... */
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
             font-style: italic; font-size: 3.2rem;
             color: var(--night-bordeaux); margin: 0;
+            pointer-events: auto;
         }
 
-        #valentine-question {
-            font-family: 'Gaegu', cursive;
-            font-size: 5.5rem; 
-            color: var(--tux-green);
-            font-weight: 700;
-            margin: 15px 0;
-            text-shadow: 2px 2px 0px white;
-        }
-
-        /* Wrapped the heart and text together so the whole thing is a button */
+        /* THE HEART - THE ONLY CLICKABLE THING */
         #heartStage {
-            display: inline-block;
+            position: relative;
+            z-index: 9999 !important; /* Highest Layer */
+            pointer-events: auto !important; /* FORCE CLICKABILITY */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             margin-top: 20px;
-            transition: transform 0.3s;
+            background: transparent;
         }
-        #heartStage:hover { transform: scale(1.05); }
 
         .heart-btn { 
             font-size: 150px; 
             animation: heartbeat 1.2s infinite;
-            display: block;
-            margin: 0 auto;
+            user-select: none;
         }
         
         .tap-instruction { 
@@ -82,13 +78,15 @@
             font-size: 2.5rem; 
             color: var(--rosewood); 
             font-weight: bold;
-            margin-top: 15px;
-            pointer-events: none; /* Allows click to pass through to the heartStage */
+            margin-top: 10px;
         }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        .button-group { display: flex; justify-content: center; gap: 35px; width: 100%; margin-top: 25px; }
+        /* YES/NO BUTTONS */
+        #askStage { pointer-events: auto; }
+        
+        .button-group { display: flex; justify-content: center; gap: 35px; margin-top: 25px; }
 
         .kawaii-btn {
             background: var(--night-bordeaux); color: white; border: none;
@@ -97,43 +95,21 @@
             box-shadow: 0 5px 0px #3a0a18;
         }
 
+        #valentine-question {
+            font-family: 'Gaegu', cursive; font-size: 5.5rem; 
+            color: var(--tux-green); font-weight: 700;
+            text-shadow: 2px 2px 0px white;
+        }
+
+        /* TUX SPEECH */
         #tux-speech {
             position: fixed; bottom: 150px; left: 100px;
             background: white; padding: 25px 35px;
             border-radius: 30px; border: 4px solid black;
-            display: none; z-index: 20;
+            display: none; z-index: 100;
             font-family: 'Gaegu', cursive; font-size: 2.8rem;
         }
 
+        /* PAGE 2 */
         #itin-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('bg2.png');
-            background-size: 100% 100%;
-            background-position: center;
-            display: none; 
-            z-index: 1000;
-        }
-
-        #itinerary-music {
-            position: absolute;
-            bottom: -1000px;
-            visibility: hidden;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="tux-bg"></div>
-    <div id="tux-speech">Great choice! Ribbit! 🐸</div>
-
-    <div class="canvas-area">
-        <h1>for my mendhak...</h1>
-
-        <div id="heartStage" onclick="revealAsk()">
-            <div class="heart-btn">💖</div>
-            <p class="tap-instruction">u da real art but pls tap this heart</p>
-        </div>
-
-        <div id="askStage" style="display:none;">
-            <div id="valentine-question">Will you be my Valentine? 🥺</div>
-            <div class="
+            position: fixed
