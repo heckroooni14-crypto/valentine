@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for my love</title>
-    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
-    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -23,25 +21,19 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        /* Fixed Ratio Viewport: Prevents background distortion */
         .game-viewport {
             position: relative; 
-            width: 100vw; 
-            height: 75vw; /* 4:3 Ratio */
-            max-width: 1200px; 
-            max-height: 900px;
+            width: 100vw; height: 75vw;
+            max-width: 1200px; max-height: 900px;
             background-color: #fff; 
             box-shadow: 0 0 50px rgba(0,0,0,0.8);
             overflow: hidden;
         }
 
-        /* Persistent Background Layer: No more black flickering */
         #main-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
             background-image: url('bg.png'); 
-            background-size: contain; 
-            background-repeat: no-repeat; 
-            background-position: center; 
+            background-size: contain; background-repeat: no-repeat; background-position: center; 
             z-index: 1; 
         }
 
@@ -51,38 +43,14 @@
             align-items: center; justify-content: center; text-align: center;
         }
 
-        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 3.5rem); color: var(--night-bordeaux); margin: 0; pointer-events: none; }
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 3.5rem); color: var(--night-bordeaux); margin: 0; }
+        .heart { font-size: clamp(60px, 20vw, 130px); cursor: pointer; display: inline-block; transition: transform 0.2s ease; z-index: 999; }
+        .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1rem, 4vw, 2rem); color: var(--rosewood); font-weight: bold; margin-top: 10px; }
         
-        .heart { 
-            font-size: clamp(60px, 20vw, 130px); 
-            cursor: pointer; 
-            display: inline-block; 
-            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            z-index: 999;
-            user-select: none;
-        }
-
-        .tap-text { 
-            font-family: 'Playfair Display', serif; font-style: italic; 
-            font-size: clamp(1rem, 4vw, 2rem); color: var(--rosewood); 
-            font-weight: bold; margin-top: 10px; pointer-events: none;
-        }
-
-        #question { 
-            font-family: 'Playfair Display', serif; font-style: italic; 
-            font-size: clamp(2rem, 8vw, 4.5rem); color: var(--tux-green); 
-            margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; 
-        }
-
+        #question { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(2rem, 8vw, 4.5rem); color: var(--tux-green); margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; }
+        
         .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
-        
-        .btn { 
-            padding: 15px 40px; font-size: 1.5rem; font-weight: bold; 
-            border-radius: 12px; border: none; background: var(--night-bordeaux); 
-            color: white; cursor: pointer; box-shadow: 0 4px 0px #3a0a18;
-            transition: transform 0.1s;
-        }
-        .btn:active { transform: translateY(4px); box-shadow: none; }
+        .btn { padding: 15px 40px; font-size: 1.5rem; font-weight: bold; border-radius: 12px; border: none; background: var(--night-bordeaux); color: white; cursor: pointer; box-shadow: 0 4px 0px #3a0a18; }
     </style>
 </head>
 <body>
@@ -94,7 +62,7 @@
             <source src="song.mp3" type="audio/mpeg">
         </audio>
 
-        <div class="ui-layer">
+        <div class="ui-layer" id="interactive-ui">
             <div id="heart-section">
                 <h1 id="main-title">for my mendhak...</h1>
                 <div class="heart" id="evolving-heart" onclick="evolveHeart()">🤍</div>
@@ -115,7 +83,6 @@
         const audio = document.getElementById("myFunnyValentine");
         let clickCount = 0;
         
-        // Evolution Stages
         const stages = [
             { heart: "🤍", text: "tap the heart to start", title: "for my mendhak..." },
             { heart: "💖", text: "getting warmer...", title: "keep going..." },
@@ -127,11 +94,6 @@
         function evolveHeart() {
             clickCount++;
             
-            // Start music on first tap
-            if(clickCount === 1) {
-                audio.play().catch(e => console.log("Audio waiting for interaction"));
-            }
-
             const heart = document.getElementById('evolving-heart');
             const status = document.getElementById('status-text');
             const title = document.getElementById('main-title');
@@ -140,38 +102,33 @@
                 heart.innerHTML = stages[clickCount].heart;
                 status.innerHTML = stages[clickCount].text;
                 title.innerHTML = stages[clickCount].title;
-                
-                // Pop animation
                 heart.style.transform = `scale(${1 + clickCount * 0.15})`;
-                confetti({ 
-                    particleCount: 25, 
-                    spread: 50, 
-                    origin: { y: 0.6 },
-                    colors: ['#C9184A', '#590D22', '#ffb3c1']
-                });
+                confetti({ particleCount: 20, spread: 40, origin: { y: 0.6 } });
             } else {
-                // Trigger the Question
+                // EVOLUTION COMPLETE: QUESTION APPEARS HERE
                 document.getElementById('heart-section').style.display = 'none';
                 document.getElementById('ask-section').style.display = 'block';
-                confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+                
+                // MUSIC STARTS EXACTLY NOW
+                audio.play().catch(e => console.log("Audio play blocked until click"));
+                
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
             }
         }
 
         function sayYes() {
-            // Instant background swap
+            // SWAP BACKGROUND
             document.getElementById('main-bg').style.backgroundImage = "url('bg2.png')";
             
-            // Final UI Update
-            document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
-            document.getElementById('question').style.color = "#C9184A";
+            // REMOVE ALL UI INSTANTLY
+            document.getElementById('interactive-ui').style.display = 'none';
             
-            // Grand Finale Confetti
-            var duration = 3 * 1000;
+            // Celebration Confetti
+            var duration = 5 * 1000;
             var end = Date.now() + duration;
-
             (function frame() {
-              confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 } });
-              confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 } });
+              confetti({ particleCount: 3, angle: 60, spread: 55, origin: { x: 0, y: 0.7 } });
+              confetti({ particleCount: 3, angle: 120, spread: 55, origin: { x: 1, y: 0.7 } });
               if (Date.now() < end) { requestAnimationFrame(frame); }
             }());
         }
@@ -179,11 +136,8 @@
         function moveNo() {
             const btn = document.getElementById('no-btn');
             const viewport = document.querySelector('.game-viewport');
-            
-            // Keep the button inside the visible Tux Paint area
             const maxX = viewport.clientWidth - btn.clientWidth - 20;
             const maxY = viewport.clientHeight - btn.clientHeight - 20;
-            
             btn.style.position = 'absolute';
             btn.style.left = Math.max(10, Math.random() * maxX) + 'px';
             btn.style.top = Math.max(10, Math.random() * maxY) + 'px';
