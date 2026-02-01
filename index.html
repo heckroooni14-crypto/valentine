@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Mendhak 🐸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -21,7 +21,7 @@
             background: var(--white);
             background-image: radial-gradient(var(--soft-pink) 0.5px, transparent 0.5px);
             background-size: 20px 20px;
-            font-family: 'Quicksand', sans-serif;
+            font-family: 'Montserrat', sans-serif; /* Clean body font */
             color: var(--night-bordeaux);
             margin: 0;
             display: flex;
@@ -47,13 +47,15 @@
         }
 
         h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3rem;
+            font-family: 'Playfair Display', serif; /* Elegant heading */
+            font-style: italic;
+            font-size: 2.8rem;
             color: var(--dark-amaranth);
-            margin: 60px 0 10px;
-            text-shadow: 2px 2px var(--white);
+            margin: 80px 0 10px;
+            text-shadow: 1px 1px var(--white);
             z-index: 10;
             text-align: center;
+            letter-spacing: -1px;
         }
 
         /* 6-Photo Gallery */
@@ -72,8 +74,8 @@
             height: 260px;
             background: white;
             padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            border-radius: 2px; /* Sharper, cleaner edges */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             transform: rotate(var(--r));
             transition: 0.4s ease;
             border: 1px solid var(--soft-pink);
@@ -84,7 +86,6 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 4px;
         }
 
         .photo-card:hover { transform: rotate(0deg) scale(1.1); z-index: 5; }
@@ -107,15 +108,17 @@
 
         .tap-instruction {
             margin-top: 15px;
-            font-weight: bold;
+            font-weight: 500;
             color: var(--rosewood);
-            font-size: 1.2rem; /* Slightly larger for the cute text */
+            font-size: 1rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
             animation: fadeInOut 2s infinite;
         }
 
         @keyframes heartbeat {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+            50% { transform: scale(1.05); }
         }
 
         @keyframes fadeInOut {
@@ -124,33 +127,46 @@
         }
 
         /* Question & Buttons */
-        #ask { display: none; text-align: center; margin-bottom: 50px; }
+        #ask { display: none; text-align: center; margin-bottom: 50px; padding: 0 20px; }
         
+        #ask h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+        }
+
         .kawaii-btn {
             background: var(--rosewood);
             color: white;
             border: none;
             padding: 15px 45px;
-            border-radius: 50px;
-            font-family: 'Quicksand', sans-serif;
-            font-weight: bold;
-            font-size: 1.2rem;
+            border-radius: 2px; /* Clean matching edges */
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 5px 0 var(--night-bordeaux);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin: 10px;
+            transition: 0.3s;
+        }
+
+        .kawaii-btn:hover {
+            background: var(--dark-amaranth);
+            letter-spacing: 2px;
         }
 
         @media (max-width: 768px) {
             .spotify-container { position: relative; top: 0; right: 0; width: 90%; margin: 20px auto; }
-            h1 { font-size: 2.2rem; margin-top: 20px; }
+            h1 { font-size: 2rem; margin-top: 20px; }
         }
     </style>
 </head>
 <body>
 
     <div class="spotify-container">
-        <p style="font-size: 0.7rem; margin: 0 0 5px 5px; font-weight: bold; color: var(--dark-amaranth);">MUSIC THAT REMINDS ME OF YOU ♡</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <p style="font-size: 0.65rem; margin: 0 0 5px 5px; font-weight: 500; color: var(--dark-amaranth); letter-spacing: 1px;">MUSIC THAT REMINDS ME OF YOU ♡</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID_HERE" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
     </div>
 
     <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
@@ -170,7 +186,7 @@
     </div>
 
     <div id="ask">
-        <h2 style="font-family: 'Dancing Script'; font-size: 2.5rem; color: var(--night-bordeaux); margin-bottom: 20px;">Will you be my Valentine? 🥺</h2>
+        <h2>Will you be my Valentine?</h2>
         <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
         <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
     </div>
@@ -188,7 +204,7 @@
         }
 
         function celebrate() {
-            document.querySelector('h2').innerHTML = "YAY! I LOVE YOU MENDHAK! 🐸💕";
+            document.querySelector('h2').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
             confetti({
                 particleCount: 200,
                 spread: 100,
