@@ -18,12 +18,10 @@
             width: 100vw; height: 100vh;
             overflow: hidden;
             font-family: 'Montserrat', sans-serif;
-            /* Default cursor */
-            cursor: default;
         }
 
-        /* Frog Cursor on buttons/interactive elements */
-        .kawaii-btn, .heart-btn {
+        /* Frog Cursor on interactive elements */
+        .kawaii-btn, .heart-btn, iframe {
             cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
         }
 
@@ -31,21 +29,23 @@
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            background-image: url('bg.png?v=3'); 
+            background-image: url('bg.png?v=4'); 
             background-size: 100% 100%;
             z-index: 1;
         }
 
+        /* BIGGER & BETTER SPOTIFY BAR */
         .spotify-container {
             position: fixed;
-            top: 30px;
-            right: 40px;
-            width: 280px;
+            top: 40px;
+            right: 50px;
+            width: 350px; /* Increased width */
             z-index: 100;
-            background: rgba(255, 255, 255, 0.9);
-            border: 3px solid var(--tux-green);
-            border-radius: 15px;
-            padding: 10px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 4px solid var(--tux-green); /* Thicker border */
+            border-radius: 20px;
+            padding: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         }
 
         .canvas-area {
@@ -63,132 +63,28 @@
         h1 {
             font-family: 'Playfair Display', serif;
             font-style: italic; 
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             color: var(--night-bordeaux);
             margin: 0;
         }
 
         #valentine-question {
             font-family: 'Gaegu', cursive;
-            font-size: 5rem; 
+            font-size: 5.5rem; 
             color: var(--tux-green);
             font-weight: 700;
-            margin: 10px 0;
+            margin: 15px 0;
             text-shadow: 3px 3px 0px white;
         }
 
-        .heart-btn { font-size: 130px; animation: heartbeat 1.2s infinite; }
-        .tap-instruction { font-family: 'Gaegu', cursive; font-size: 2rem; color: var(--rosewood); font-weight: bold; }
+        .heart-btn { font-size: 140px; animation: heartbeat 1.2s infinite; cursor: pointer; }
+        
+        .tap-instruction { 
+            font-family: 'Gaegu', cursive; 
+            font-size: 2.2rem; 
+            color: var(--rosewood); 
+            font-weight: bold;
+            max-width: 80%;
+        }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-        .kawaii-btn {
-            background: var(--night-bordeaux); 
-            color: white; 
-            border: none;
-            padding: 15px 50px; 
-            border-radius: 12px; 
-            margin: 10px;
-            font-weight: 700;
-            font-size: 1.8rem;
-            transition: 0.2s;
-        }
-
-        /* Tux Penguin Speech Bubble */
-        #tux-speech {
-            position: fixed;
-            bottom: 120px;
-            left: 80px;
-            background: white;
-            padding: 15px;
-            border-radius: 20px;
-            border: 3px solid black;
-            font-weight: bold;
-            display: none;
-            z-index: 10;
-            font-family: 'Gaegu', cursive;
-            font-size: 1.5rem;
-        }
-        #tux-speech::after {
-            content: '';
-            position: absolute;
-            bottom: -20px;
-            left: 20px;
-            border-width: 20px 20px 0;
-            border-style: solid;
-            border-color: white transparent;
-        }
-
-        #itin-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: white; display: none; flex-direction: column;
-            align-items: center; justify-content: center; z-index: 1000;
-            opacity: 0; transition: opacity 1s ease;
-        }
-        #itin-overlay img { max-width: 80%; border: 10px solid var(--white); }
-    </style>
-</head>
-<body>
-
-    <div class="tux-bg"></div>
-
-    <div id="tux-speech">Great choice! Ribbit! 🐸</div>
-
-    <div class="spotify-container">
-        <p style="font-size: 0.9rem; margin: 0 0 5px; color: #555; font-weight: bold;">Our Playlist ♡</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-    </div>
-
-    <div class="canvas-area">
-        <h1>for my mendhak...</h1>
-
-        <div id="heartStage">
-            <div class="heart-btn" onclick="revealAsk()">💖</div>
-            <p class="tap-instruction">tap to start drawing our future :3</p>
-        </div>
-
-        <div id="askStage" style="display:none;">
-            <div id="valentine-question">Will you be my Valentine? 🥺</div>
-            <div style="display: flex; gap: 20px;">
-                <button class="kawaii-btn" onclick="celebrate()">YES!</button>
-                <button class="kawaii-btn" id="noBtn" style="background: #444;" onmouseover="moveNo(this)">NO</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="itin-overlay">
-        <h2 style="font-family: 'Playfair Display'; font-size: 3rem; color: var(--night-bordeaux);">Our Date Itinerary 🪷</h2>
-        <img src="itinerary.png" alt="Our Date">
-    </div>
-
-    <script>
-        function revealAsk() {
-            document.getElementById('heartStage').style.display = 'none';
-            document.getElementById('askStage').style.display = 'block';
-            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-        }
-
-        function celebrate() {
-            document.getElementById('valentine-question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
-            document.getElementById('valentine-question').style.color = "#C9184A";
-            
-            // Show Tux speech bubble
-            document.getElementById('tux-speech').style.display = 'block';
-            
-            confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
-            
-            setTimeout(() => {
-                const itin = document.getElementById('itin-overlay');
-                itin.style.display = 'flex';
-                setTimeout(() => { itin.style.opacity = '1'; }, 50);
-            }, 5000);
-        }
-
-        function moveNo(btn) {
-            btn.style.position = 'fixed';
-            btn.style.left = Math.random() * 80 + '%';
-            btn.style.top = Math.random() * 80 + '%';
-        }
-    </script>
-</body>
-</html>
