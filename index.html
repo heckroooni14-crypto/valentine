@@ -18,48 +18,28 @@
             background: white;
         }
         
-        /* Cursor */
         .heart, .btn { cursor: pointer !important; }
 
-        /* Backgrounds */
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: 100% 100%; z-index: 1; }
         #page1-bg { background-image: url('bg.png'); display: block; }
         #page2-bg { background-image: url('bg2.png'); display: none; }
 
-        /* The Interaction Layer - This sits ABOVE the backgrounds */
         .main-ui {
-            position: relative;
-            z-index: 10;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
+            position: relative; z-index: 10; width: 100vw; height: 100vh;
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
         }
 
-        h1 { 
-            font-family: 'Playfair Display', serif; font-style: italic; 
-            font-size: 3.5rem; color: var(--night-bordeaux); margin: 0; 
-        }
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 3.5rem; color: var(--night-bordeaux); margin: 0; }
 
-        /* The Heart - Forced to be clickable */
         .heart { 
-            font-size: 150px; 
-            display: inline-block; 
-            animation: heartbeat 1.2s infinite; 
-            margin: 20px 0;
-            position: relative;
-            z-index: 999; /* Way on top */
-            pointer-events: auto !important;
+            font-size: 150px; display: inline-block; animation: heartbeat 1.2s infinite; 
+            margin: 20px 0; position: relative; z-index: 999; pointer-events: auto !important;
         }
         
         .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2.2rem; color: var(--rosewood); font-weight: bold; }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
-        /* The Question Area */
         #question { 
             font-family: 'Playfair Display', serif; font-style: italic;
             font-size: 5.5rem; color: var(--tux-green); margin: 20px; font-weight: 700;
@@ -71,10 +51,8 @@
             padding: 20px 60px; font-size: 2rem; font-weight: bold; 
             border-radius: 15px; border: none; background: var(--night-bordeaux); color: white;
             box-shadow: 0 4px 0px #3a0a18;
-            pointer-events: auto;
         }
 
-        /* Tux Speech */
         #tux-speech {
             position: fixed; bottom: 100px; left: 50px;
             background: white; padding: 20px 30px;
@@ -91,8 +69,8 @@
 
     <div id="tux-speech">Great choice! Ribbit! 🐸</div>
 
-    <audio id="myFunnyValentine">
-        <source src="https://www.archive.org/download/ChetBakerMyFunnyValentine/Chet%20Baker%20-%20My%20Funny%20Valentine.mp3" type="audio/mpeg">
+    <audio id="myFunnyValentine" loop>
+        <source src="https://ia800501.us.archive.org/11/items/cd_my-funny-valentine_chet-baker-stan-getz/disc1/01.%20Chet%20Baker%20-%20My%20Funny%20Valentine_sample.mp3" type="audio/mpeg">
     </audio>
 
     <div class="main-ui">
@@ -115,16 +93,19 @@
         const audio = document.getElementById("myFunnyValentine");
 
         function showQuestion() {
-            // Check if function even runs
-            console.log("Heart Tapped");
+            // Some browsers need a click here to "unlock" audio later
+            audio.play().then(() => {
+                audio.pause(); // Just unlocking the play permission
+                audio.currentTime = 0;
+            }).catch(e => console.log("Unlock required on next click"));
+
             document.getElementById('heart-section').style.display = 'none';
             document.getElementById('ask-section').style.display = 'block';
             confetti({ particleCount: 150, spread: 70 });
         }
 
         function sayYes() {
-            // Play song
-            audio.play();
+            audio.play(); // This should now work because of the previous clicks
 
             document.getElementById('tux-speech').style.display = 'block';
             document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
