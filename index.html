@@ -2,8 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>for my love</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -20,27 +23,27 @@
             font-family: 'Montserrat', sans-serif;
         }
 
-        #loader {
-            position: fixed; z-index: 9999; background: #1a1a1a;
-            color: white; width: 100%; height: 100%; display: flex;
-            align-items: center; justify-content: center; font-size: 1.5rem;
-        }
-
+        /* Fixed Ratio Viewport: Prevents background distortion */
         .game-viewport {
-            position: relative; width: 100vw; height: 75vw;
-            max-width: 1200px; max-height: 900px;
-            background-color: #fff; box-shadow: 0 0 50px rgba(0,0,0,0.5);
-            overflow: hidden; display: none;
+            position: relative; 
+            width: 100vw; 
+            height: 75vw; /* 4:3 Ratio */
+            max-width: 1200px; 
+            max-height: 900px;
+            background-color: #fff; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            overflow: hidden;
         }
 
-        .bg { 
+        /* Persistent Background Layer: No more black flickering */
+        #main-bg { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-            background-size: contain; background-repeat: no-repeat; background-position: center; 
+            background-image: url('bg.png'); 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
             z-index: 1; 
         }
-        
-        #page1-bg { background-image: url('bg.png'); }
-        #page2-bg { background-image: url('bg2.png'); display: none; }
 
         .ui-layer { 
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
@@ -48,109 +51,23 @@
             align-items: center; justify-content: center; text-align: center;
         }
 
-        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: 3.5rem; color: var(--night-bordeaux); margin: 0; }
+        h1 { font-family: 'Playfair Display', serif; font-style: italic; font-size: clamp(1.5rem, 6vw, 3.5rem); color: var(--night-bordeaux); margin: 0; pointer-events: none; }
         
         .heart { 
-            font-size: 120px; cursor: pointer; display: inline-block; 
-            transition: transform 0.2s ease; z-index: 999;
+            font-size: clamp(60px, 20vw, 130px); 
+            cursor: pointer; 
+            display: inline-block; 
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            z-index: 999;
+            user-select: none;
         }
 
-        .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--rosewood); font-weight: bold; margin-top: 10px; }
-
-        #question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 4.2rem; color: var(--tux-green); margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; }
-
-        .btn-group { display: flex; gap: 20px; justify-content: center; }
-        .btn { padding: 15px 40px; font-size: 1.8rem; font-weight: bold; border-radius: 12px; border: none; background: var(--night-bordeaux); color: white; cursor: pointer; box-shadow: 0 4px 0px #3a0a18; }
-    </style>
-</head>
-<body onload="doneLoading()">
-
-    <div id="loader">sanku</div>
-
-    <div class="game-viewport" id="main-view">
-        <div id="page1-bg" class="bg"></div>
-        <div id="page2-bg" class="bg"></div>
-
-        <audio id="myFunnyValentine" loop preload="auto">
-            <source src="song.mp3" type="audio/mpeg">
-        </audio>
-
-        <div class="ui-layer">
-            <div id="heart-section">
-                <h1 id="main-title">for my mendhak....𓏲⊹₊˚🪷.˚₊𓆏</h1>
-                <div class="heart" id="evolving-heart" onclick="evolveHeart()">🤍</div>
-                <p class="tap-text" id="status-text">u da real art pls tap this heart</p>
-            </div>
-
-            <div id="ask-section" style="display: none;">
-                <h1 id="question">will you be my valentine? ⸜(｡˃ ᵕ ˂ )⸝♡</h1>
-                <div class="btn-group">
-                    <button class="btn" onclick="sayYes()">YES!</button>
-                    <button class="btn" id="no-btn" onmouseover="moveNo()">no???</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const audio = document.getElementById("myFunnyValentine");
-        let clickCount = 0;
-        
-        // Custom Stages: Add as many as you like!
-        const stages = [
-            { heart: "🤍", text: "u da real art pls tap this heart", title: "for my mendhak....𓏲⊹₊˚🪷.˚₊" },
-            { heart: "💖", text: "bruh" },
-            { heart: "💝", text: "almost there..." },
-            { heart: "💗", text: "one more tap!" },
-            { heart: "❤️", text: "READY!", title: "I HAVE A QUESTION!" }
-        ];
-
-        function doneLoading() {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('main-view').style.display = 'block';
+        .tap-text { 
+            font-family: 'Playfair Display', serif; font-style: italic; 
+            font-size: clamp(1rem, 4vw, 2rem); color: var(--rosewood); 
+            font-weight: bold; margin-top: 10px; pointer-events: none;
         }
 
-        function evolveHeart() {
-            clickCount++;
-            
-            // Start music on first tap
-            if(clickCount === 1) audio.play().catch(e => console.log("Music ready"));
-
-            const heart = document.getElementById('evolving-heart');
-            const status = document.getElementById('status-text');
-            const title = document.getElementById('main-title');
-
-            if (clickCount < stages.length) {
-                heart.innerHTML = stages[clickCount].heart;
-                status.innerHTML = stages[clickCount].text;
-                title.innerHTML = stages[clickCount].title;
-                
-                // Visual feedback
-                heart.style.transform = `scale(${1 + clickCount * 0.15})`;
-                confetti({ particleCount: 20, spread: 40 });
-            } else {
-                // Finale
-                document.getElementById('heart-section').style.display = 'none';
-                document.getElementById('ask-section').style.display = 'block';
-                confetti({ particleCount: 150, spread: 70 });
-            }
-        }
-
-        function sayYes() {
-            document.getElementById('question').innerHTML = "YAY! I LOVE YOU! (づ> v <)づ♡";
-            document.getElementById('question').style.color = "#C9184A";
-            confetti({ particleCount: 300, spread: 100 });
-
-            setTimeout(() => {
-                document.getElementById('page1-bg').style.display = 'none';
-                document.getElementById('page2-bg').style.display = 'block';
-                document.getElementById('ask-section').style.display = 'none';
-            }, 4000);
-        }
-
-        function moveNo() {
-            const btn = document.getElementById('no-btn');
-            const viewport = document.getElementById('main-view');
-            btn.style.position = 'absolute';
-            btn.style.left = Math.random() * (viewport.clientWidth - 1
-
+        #question { 
+            font-family: 'Playfair Display', serif; font-style: italic; 
+            font-size: clamp(2rem, 8vw, 4.5rem);
