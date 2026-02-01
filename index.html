@@ -4,82 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Mendhak 🐸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;500&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --night-bordeaux: #590D22;
-            --dark-amaranth: #800F2F;
+            --tux-green: #77BC1F; 
             --rosewood: #C9184A;
-            --bubblegum: #FF4D6D;
-            --soft-pink: #FF758F;
-            --white: #FFF0F3;
         }
 
         body, html {
             margin: 0; padding: 0;
             width: 100vw; height: 100vh;
             overflow: hidden;
-            background-color: #f0f0f0;
             font-family: 'Montserrat', sans-serif;
+            /* Default cursor */
+            cursor: default;
         }
 
-        /* --- UPDATED BACKGROUND LINK --- */
+        /* Frog Cursor on buttons/interactive elements */
+        .kawaii-btn, .heart-btn {
+            cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
+        }
+
         .tux-bg {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
-            /* Uses the exact name from your GitHub screenshot */
-            background-image: url('bg.png'); 
+            background-image: url('bg.png?v=3'); 
             background-size: 100% 100%;
-            background-repeat: no-repeat;
             z-index: 1;
+        }
+
+        .spotify-container {
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            width: 280px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.9);
+            border: 3px solid var(--tux-green);
+            border-radius: 15px;
+            padding: 10px;
         }
 
         .canvas-area {
             position: absolute;
             top: 15%; left: 13%;    
-            width: 73%; height: 65%;  
+            width: 73%; height: 60%;  
             z-index: 2;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around;
+            justify-content: center;
             text-align: center;
         }
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-style: italic; font-size: 2.2rem;
-            color: var(--dark-amaranth); margin: 0;
+            font-style: italic; 
+            font-size: 3.2rem;
+            color: var(--night-bordeaux);
+            margin: 0;
         }
 
-        .spotify-container {
-            width: 260px; background: rgba(255, 255, 255, 0.9);
-            border: 2px solid #77BC1F; border-radius: 15px; padding: 8px;
+        #valentine-question {
+            font-family: 'Gaegu', cursive;
+            font-size: 5rem; 
+            color: var(--tux-green);
+            font-weight: 700;
+            margin: 10px 0;
+            text-shadow: 3px 3px 0px white;
         }
 
-        .gallery-container {
-            display: flex; gap: 12px; width: 100%;
-            overflow-x: auto; padding: 15px 5px; scrollbar-width: none;
-        }
-
-        .photo-card {
-            min-width: 150px; height: 200px;
-            background: white; padding: 8px;
-            border: 1px solid var(--soft-pink); transform: rotate(var(--r));
-            flex-shrink: 0;
-        }
-        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
-
-        .heart-btn { font-size: 100px; cursor: pointer; animation: heartbeat 1.2s infinite; }
-        .tap-instruction { font-family: 'Gaegu', cursive; font-weight: bold; color: var(--rosewood); font-size: 1.4rem; }
+        .heart-btn { font-size: 130px; animation: heartbeat 1.2s infinite; }
+        .tap-instruction { font-family: 'Gaegu', cursive; font-size: 2rem; color: var(--rosewood); font-weight: bold; }
 
         @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
 
         .kawaii-btn {
-            background: var(--rosewood); color: white; border: none;
-            padding: 12px 35px; border-radius: 5px; cursor: pointer; margin: 5px;
+            background: var(--night-bordeaux); 
+            color: white; 
+            border: none;
+            padding: 15px 50px; 
+            border-radius: 12px; 
+            margin: 10px;
+            font-weight: 700;
+            font-size: 1.8rem;
+            transition: 0.2s;
+        }
+
+        /* Tux Penguin Speech Bubble */
+        #tux-speech {
+            position: fixed;
+            bottom: 120px;
+            left: 80px;
+            background: white;
+            padding: 15px;
+            border-radius: 20px;
+            border: 3px solid black;
+            font-weight: bold;
+            display: none;
+            z-index: 10;
+            font-family: 'Gaegu', cursive;
+            font-size: 1.5rem;
+        }
+        #tux-speech::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 20px;
+            border-width: 20px 20px 0;
+            border-style: solid;
+            border-color: white transparent;
         }
 
         #itin-overlay {
@@ -88,46 +125,40 @@
             align-items: center; justify-content: center; z-index: 1000;
             opacity: 0; transition: opacity 1s ease;
         }
-        #itin-overlay img { max-width: 85%; max-height: 75%; border: 8px solid white; }
+        #itin-overlay img { max-width: 80%; border: 10px solid var(--white); }
     </style>
 </head>
 <body>
 
     <div class="tux-bg"></div>
 
-    <div class="canvas-area" id="mainContent">
-        <div class="spotify-container">
-            <p style="font-size: 0.7rem; margin: 0 0 5px; color: #555;">music that reminds me of you ♡</p>
-            <iframe style="border-radius:12px" src="http://googleusercontent.com/spotify.com/8" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-        </div>
+    <div id="tux-speech">Great choice! Ribbit! 🐸</div>
 
-        <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
+    <div class="spotify-container">
+        <p style="font-size: 0.9rem; margin: 0 0 5px; color: #555; font-weight: bold;">Our Playlist ♡</p>
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
+    </div>
 
-        <div class="gallery-container">
-            <div class="photo-card" style="--r: -4deg;"><img src="photo1.jpg"></div>
-            <div class="photo-card" style="--r: 3deg;"><img src="photo2.jpg"></div>
-            <div class="photo-card" style="--r: -2deg;"><img src="photo3.jpg"></div>
-            <div class="photo-card" style="--r: 5deg;"><img src="photo4.jpg"></div>
-            <div class="photo-card" style="--r: -3deg;"><img src="photo5.jpg"></div>
-            <div class="photo-card" style="--r: 2deg;"><img src="photo6.jpg"></div>
-        </div>
+    <div class="canvas-area">
+        <h1>for my mendhak...</h1>
 
         <div id="heartStage">
             <div class="heart-btn" onclick="revealAsk()">💖</div>
-            <p class="tap-instruction">u tap my heart :3</p>
+            <p class="tap-instruction">tap to start drawing our future :3</p>
         </div>
 
         <div id="askStage" style="display:none;">
-            <h2 id="msg" style="font-family: 'Playfair Display';">Will you be my Valentine?</h2>
-            <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
-            <button class="kawaii-btn" id="noBtn" style="background: var(--night-bordeaux);" onmouseover="moveNo(this)">No</button>
+            <div id="valentine-question">Will you be my Valentine? 🥺</div>
+            <div style="display: flex; gap: 20px;">
+                <button class="kawaii-btn" onclick="celebrate()">YES!</button>
+                <button class="kawaii-btn" id="noBtn" style="background: #444;" onmouseover="moveNo(this)">NO</button>
+            </div>
         </div>
     </div>
 
     <div id="itin-overlay">
-        <h2 style="font-family: 'Playfair Display'; color: var(--dark-amaranth);">our itinerary .𓏲⊹₊˚🪷.˚₊𓆏</h2>
+        <h2 style="font-family: 'Playfair Display'; font-size: 3rem; color: var(--night-bordeaux);">Our Date Itinerary 🪷</h2>
         <img src="itinerary.png" alt="Our Date">
-        <p style="margin-top: 15px; font-style: italic;">I can't wait! ♡</p>
     </div>
 
     <script>
@@ -138,8 +169,14 @@
         }
 
         function celebrate() {
-            document.getElementById('msg').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
-            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+            document.getElementById('valentine-question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
+            document.getElementById('valentine-question').style.color = "#C9184A";
+            
+            // Show Tux speech bubble
+            document.getElementById('tux-speech').style.display = 'block';
+            
+            confetti({ particleCount: 300, spread: 120, origin: { y: 0.6 } });
+            
             setTimeout(() => {
                 const itin = document.getElementById('itin-overlay');
                 itin.style.display = 'flex';
@@ -149,10 +186,9 @@
 
         function moveNo(btn) {
             btn.style.position = 'fixed';
-            btn.style.left = Math.random() * 70 + '%';
-            btn.style.top = Math.random() * 70 + '%';
+            btn.style.left = Math.random() * 80 + '%';
+            btn.style.top = Math.random() * 80 + '%';
         }
     </script>
 </body>
 </html>
-
