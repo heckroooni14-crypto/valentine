@@ -17,21 +17,50 @@
             --white: #FFF0F3;
         }
 
-        body {
-            background: var(--white);
-            background-image: radial-gradient(var(--soft-pink) 0.5px, transparent 0.5px);
-            background-size: 20px 20px;
-            font-family: 'Montserrat', sans-serif; /* Clean body font */
-            color: var(--night-bordeaux);
+        body, html {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* --- BACKGROUND SETTINGS --- */
+        .bg-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            /* PASTE YOUR BACKGROUND IMAGE URL BELOW */
+            background-image: url('Screenshot 2026-02-01 174203.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-color: var(--white); /* Fallback color */
+        }
+
+        /* Subtle overlay to make text readable */
+        .bg-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 240, 243, 0.6); 
+            z-index: -1;
+        }
+
+        .main-content {
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
-            overflow-x: hidden;
+            transition: opacity 1s ease-in-out;
         }
 
-        /* Spotify - Top Right */
+        /* Spotify */
         .spotify-container {
             position: fixed;
             top: 20px;
@@ -47,15 +76,12 @@
         }
 
         h1 {
-            font-family: 'Playfair Display', serif; /* Elegant heading */
+            font-family: 'Playfair Display', serif;
             font-style: italic;
             font-size: 2.8rem;
             color: var(--dark-amaranth);
             margin: 80px 0 10px;
-            text-shadow: 1px 1px var(--white);
-            z-index: 10;
             text-align: center;
-            letter-spacing: -1px;
         }
 
         /* 6-Photo Gallery */
@@ -74,7 +100,6 @@
             height: 260px;
             background: white;
             padding: 10px;
-            border-radius: 2px; /* Sharper, cleaner edges */
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             transform: rotate(var(--r));
             transition: 0.4s ease;
@@ -82,135 +107,116 @@
             flex-shrink: 0;
         }
 
-        .photo-card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .photo-card img { width: 100%; height: 100%; object-fit: cover; }
 
-        .photo-card:hover { transform: rotate(0deg) scale(1.1); z-index: 5; }
-
-        /* Heart Section */
-        .heart-wrapper {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 30px 0;
-        }
-
-        .heart-btn {
-            font-size: 140px;
-            cursor: pointer;
-            animation: heartbeat 1.2s infinite;
-            filter: drop-shadow(0 0 15px var(--bubblegum));
-            user-select: none;
-        }
-
-        .tap-instruction {
-            margin-top: 15px;
-            font-weight: 500;
-            color: var(--rosewood);
-            font-size: 1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            animation: fadeInOut 2s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes fadeInOut {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 1; }
-        }
-
-        /* Question & Buttons */
-        #ask { display: none; text-align: center; margin-bottom: 50px; padding: 0 20px; }
+        /* Heart & Buttons */
+        .heart-btn { font-size: 140px; cursor: pointer; animation: heartbeat 1.2s infinite; user-select: none; margin: 30px 0; }
+        .tap-instruction { font-weight: 500; color: var(--rosewood); letter-spacing: 2px; text-transform: uppercase; animation: fadeInOut 2s infinite; }
         
-        #ask h2 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.2rem;
-            margin-bottom: 30px;
-        }
-
+        #ask { display: none; text-align: center; padding: 0 20px; }
         .kawaii-btn {
             background: var(--rosewood);
             color: white;
             border: none;
             padding: 15px 45px;
-            border-radius: 2px; /* Clean matching edges */
             font-family: 'Montserrat', sans-serif;
-            font-weight: 500;
-            font-size: 1rem;
             cursor: pointer;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin: 10px;
-            transition: 0.3s;
         }
 
-        .kawaii-btn:hover {
-            background: var(--dark-amaranth);
-            letter-spacing: 2px;
+        /* --- ITINERARY PAGE --- */
+        #itinerary-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--white);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
         }
 
-        @media (max-width: 768px) {
-            .spotify-container { position: relative; top: 0; right: 0; width: 90%; margin: 20px auto; }
-            h1 { font-size: 2rem; margin-top: 20px; }
+        #itinerary-page img {
+            max-width: 90%;
+            max-height: 85%;
+            border: 10px solid white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
         }
+
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        @keyframes fadeInOut { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <div class="spotify-container">
-        <p style="font-size: 0.65rem; margin: 0 0 5px 5px; font-weight: 500; color: var(--dark-amaranth); letter-spacing: 1px;">MUSIC THAT REMINDS ME OF YOU ♡</p>
-        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID_HERE" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <div class="bg-layer"></div>
+    <div class="bg-overlay"></div>
+
+    <div class="main-content" id="mainContent">
+        <div class="spotify-container">
+            <p style="font-size: 0.65rem; margin: 0 0 5px 5px; font-weight: 500; color: var(--dark-amaranth); letter-spacing: 1px;">MUSIC THAT REMINDS ME OF YOU ♡</p>
+            <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/YOUR_PLAYLIST_ID" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+
+        <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
+
+        <div class="gallery-container">
+            <div class="photo-card" style="--r: -4deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+            <div class="photo-card" style="--r: 3deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+            <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+            <div class="photo-card" style="--r: 5deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+            <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+            <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/200x260" alt="us"></div>
+        </div>
+
+        <div class="heart-wrapper" id="heartWrapper" style="text-align: center;">
+            <div class="heart-btn" onclick="reveal()">💖</div>
+            <p class="tap-instruction">u tap my heart :3</p>
+        </div>
+
+        <div id="ask">
+            <h2 id="questionText">Will you be my Valentine?</h2>
+            <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
+            <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
+        </div>
     </div>
 
-    <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
-
-    <div class="gallery-container">
-        <div class="photo-card" style="--r: -4deg;"><img src="https://via.placeholder.com/200x260/590D22/ffffff?text=Photo+1" alt="us"></div>
-        <div class="photo-card" style="--r: 3deg;"><img src="https://via.placeholder.com/200x260/800F2F/ffffff?text=Photo+2" alt="us"></div>
-        <div class="photo-card" style="--r: -2deg;"><img src="https://via.placeholder.com/200x260/A4133C/ffffff?text=Photo+3" alt="us"></div>
-        <div class="photo-card" style="--r: 5deg;"><img src="https://via.placeholder.com/200x260/C9184A/ffffff?text=Photo+4" alt="us"></div>
-        <div class="photo-card" style="--r: -3deg;"><img src="https://via.placeholder.com/200x260/FF4D6D/ffffff?text=Photo+5" alt="us"></div>
-        <div class="photo-card" style="--r: 2deg;"><img src="https://via.placeholder.com/200x260/FF758F/ffffff?text=Photo+6" alt="us"></div>
-    </div>
-
-    <div class="heart-wrapper" id="heartWrapper">
-        <div class="heart-btn" onclick="reveal()">💖</div>
-        <p class="tap-instruction">u tap my heart :3</p>
-    </div>
-
-    <div id="ask">
-        <h2>Will you be my Valentine?</h2>
-        <button class="kawaii-btn" onclick="celebrate()">Yes!</button>
-        <button class="kawaii-btn" style="background: var(--dark-amaranth);" onmouseover="moveNo(this)">No</button>
+    <div id="itinerary-page">
+        <h2 style="font-family: 'Playfair Display'; color: var(--dark-amaranth); margin-bottom: 20px;">Our Valentine's Date 🪷</h2>
+        <img src="YOUR_ITINERARY_IMAGE_URL_HERE" alt="Our Date Itinerary">
+        <p style="margin-top: 20px; font-style: italic;">I can't wait! ♡</p>
     </div>
 
     <script>
         function reveal() {
             document.getElementById('heartWrapper').style.display = 'none';
             document.getElementById('ask').style.display = 'block';
-            confetti({ 
-                particleCount: 150, 
-                spread: 70, 
-                origin: { y: 0.6 }, 
-                colors: ['#590D22', '#800F2F', '#FF758F'] 
-            });
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: ['#590D22', '#800F2F'] });
         }
 
         function celebrate() {
-            document.querySelector('h2').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
-            confetti({
-                particleCount: 200,
-                spread: 100,
-                origin: { y: 0.6 },
-                colors: ['#FFD700', '#FF4D6D', '#A4133C']
-            });
+            document.getElementById('questionText').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
+            confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 } });
+
+            // The 5-second timer
+            setTimeout(() => {
+                const main = document.getElementById('mainContent');
+                const itin = document.getElementById('itinerary-page');
+                
+                main.style.opacity = '0';
+                setTimeout(() => {
+                    main.style.display = 'none';
+                    itin.style.display = 'flex';
+                    setTimeout(() => { itin.style.opacity = '1'; }, 50);
+                }, 1000);
+            }, 5000);
         }
 
         function moveNo(btn) {
