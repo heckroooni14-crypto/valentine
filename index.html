@@ -26,7 +26,6 @@
             align-items: center; justify-content: center; font-size: 1.5rem;
         }
 
-        /* The viewport keeps the ratio perfect */
         .game-viewport {
             position: relative; width: 100vw; height: 75vw;
             max-width: 1200px; max-height: 900px;
@@ -40,7 +39,6 @@
             z-index: 1; 
         }
         
-        /* Using the exact filenames from your repo */
         #page1-bg { background-image: url('bg.png'); }
         #page2-bg { background-image: url('bg2.png'); display: none; }
 
@@ -54,12 +52,12 @@
         
         .heart { 
             font-size: 120px; cursor: pointer; display: inline-block; 
-            transition: transform 0.3s ease; z-index: 999;
+            transition: transform 0.2s ease; z-index: 999;
         }
 
-        .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--rosewood); font-weight: bold; }
+        .tap-text { font-family: 'Playfair Display', serif; font-style: italic; font-size: 2rem; color: var(--rosewood); font-weight: bold; margin-top: 10px; }
 
-        #question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 4.5rem; color: var(--tux-green); margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; }
+        #question { font-family: 'Playfair Display', serif; font-style: italic; font-size: 4.2rem; color: var(--tux-green); margin: 10px; font-weight: 700; text-shadow: 2px 2px 0px white; }
 
         .btn-group { display: flex; gap: 20px; justify-content: center; }
         .btn { padding: 15px 40px; font-size: 1.8rem; font-weight: bold; border-radius: 12px; border: none; background: var(--night-bordeaux); color: white; cursor: pointer; box-shadow: 0 4px 0px #3a0a18; }
@@ -79,7 +77,7 @@
 
         <div class="ui-layer">
             <div id="heart-section">
-                <h1>for my mendhak...</h1>
+                <h1 id="main-title">for my mendhak...</h1>
                 <div class="heart" id="evolving-heart" onclick="evolveHeart()">🤍</div>
                 <p class="tap-text" id="status-text">tap the heart to start</p>
             </div>
@@ -97,7 +95,15 @@
     <script>
         const audio = document.getElementById("myFunnyValentine");
         let clickCount = 0;
-        const heartStages = ["🤍", "💖", "💝", "💗", "❤️"];
+        
+        // Custom Stages: Add as many as you like!
+        const stages = [
+            { heart: "🤍", text: "tap the heart to start", title: "for my mendhak..." },
+            { heart: "💖", text: "keep going...", title: "getting warmer..." },
+            { heart: "💝", text: "almost there...", title: "it's growing!" },
+            { heart: "💗", text: "one more tap!", title: "so much love!" },
+            { heart: "❤️", text: "READY!", title: "I HAVE A QUESTION!" }
+        ];
 
         function doneLoading() {
             document.getElementById('loader').style.display = 'none';
@@ -106,17 +112,24 @@
 
         function evolveHeart() {
             clickCount++;
-            const heart = document.getElementById('evolving-heart');
             
-            // Start music on first click
-            if(clickCount === 1) audio.play();
+            // Start music on first tap
+            if(clickCount === 1) audio.play().catch(e => console.log("Music ready"));
 
-            if (clickCount < heartStages.length) {
-                heart.innerHTML = heartStages[clickCount];
-                heart.style.transform = `scale(${1 + clickCount * 0.2})`;
-                confetti({ particleCount: 30, spread: 50 });
+            const heart = document.getElementById('evolving-heart');
+            const status = document.getElementById('status-text');
+            const title = document.getElementById('main-title');
+
+            if (clickCount < stages.length) {
+                heart.innerHTML = stages[clickCount].heart;
+                status.innerHTML = stages[clickCount].text;
+                title.innerHTML = stages[clickCount].title;
+                
+                // Visual feedback
+                heart.style.transform = `scale(${1 + clickCount * 0.15})`;
+                confetti({ particleCount: 20, spread: 40 });
             } else {
-                // Evolution complete
+                // Finale
                 document.getElementById('heart-section').style.display = 'none';
                 document.getElementById('ask-section').style.display = 'block';
                 confetti({ particleCount: 150, spread: 70 });
@@ -139,9 +152,4 @@
             const btn = document.getElementById('no-btn');
             const viewport = document.getElementById('main-view');
             btn.style.position = 'absolute';
-            btn.style.left = Math.random() * (viewport.clientWidth - 100) + 'px';
-            btn.style.top = Math.random() * (viewport.clientHeight - 50) + 'px';
-        }
-    </script>
-</body>
-</html>
+            btn.style.left = Math.random() * (viewport.clientWidth - 1
