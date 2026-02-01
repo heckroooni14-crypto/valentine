@@ -1,142 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Mendhak 🐸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        :root {
-            --night-bordeaux: #590D22;
-            --tux-green: #77BC1F; 
-            --rosewood: #C9184A;
-        }
-
-        body, html {
-            margin: 0; padding: 0;
-            width: 100vw; height: 100vh;
-            overflow: hidden;
-            font-family: 'Montserrat', sans-serif;
-            background-color: #f0f0f0;
-        }
-
-        /* The background that worked */
-        .tux-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            background-image: url('bg.png'); 
-            background-size: 100% 100%;
-            z-index: 1;
-        }
-
-        /* The container that worked */
-        .canvas-area {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 2;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-style: italic; font-size: 3rem;
-            color: var(--night-bordeaux); margin: 0;
-        }
-
-        #valentine-question {
-            font-family: 'Gaegu', cursive;
-            font-size: 5rem; 
-            color: var(--tux-green);
-            font-weight: 700;
-            margin: 10px 0;
-            text-shadow: 2px 2px 0px white;
-        }
-
-        .heart-btn { 
-            font-size: 120px; 
-            cursor: pointer;
-            animation: heartbeat 1.2s infinite;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; }
         
-        .tap-instruction { 
-            font-family: 'Gaegu', cursive; 
-            font-size: 2rem; 
-            color: var(--rosewood); 
-            font-weight: bold;
+        /* The Backgrounds */
+        .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: 100% 100%; z-index: -1; }
+        #page1-bg { background-image: url('bg.png'); display: block; }
+        #page2-bg { background-image: url('bg2.png'); display: none; }
+
+        /* Main Content Box */
+        .container {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 100vh; text-align: center; color: #590D22;
         }
 
-        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-        .kawaii-btn {
-            background: var(--night-bordeaux); color: white; border: none;
-            padding: 15px 50px; border-radius: 12px; 
-            font-weight: 700; font-size: 1.8rem;
-            cursor: pointer; margin: 10px;
+        /* The Heart */
+        .heart { font-size: 120px; cursor: pointer; display: inline-block; transition: 0.3s; }
+        .heart:hover { transform: scale(1.1); }
+        
+        /* The Buttons */
+        .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+        .btn { 
+            padding: 15px 40px; font-size: 24px; font-weight: bold; cursor: pointer;
+            border-radius: 12px; border: none; background: #590D22; color: white;
         }
 
-        #tux-speech {
-            position: fixed; bottom: 120px; left: 80px;
-            background: white; padding: 20px;
-            border-radius: 20px; border: 3px solid black;
-            display: none; z-index: 100;
-            font-family: 'Gaegu', cursive; font-size: 2rem;
-        }
-
-        /* Second Page */
-        #itin-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background-image: url('bg2.png');
-            background-size: 100% 100%;
-            display: none; z-index: 1000;
-        }
-
-        #itinerary-music {
-            position: absolute; bottom: 10px; right: 10px; visibility: hidden;
-        }
+        /* Typography */
+        h1 { font-size: 3rem; margin-bottom: 10px; }
+        #question { font-size: 4rem; color: #77BC1F; margin: 20px; }
+        .tap-text { font-size: 1.5rem; font-weight: bold; color: #C9184A; }
+        
+        /* Hidden Music */
+        #music-frame { position: absolute; visibility: hidden; }
     </style>
 </head>
 <body>
 
-    <div class="tux-bg"></div>
-    <div id="tux-speech">Great choice! Ribbit! 🐸</div>
+    <div id="page1-bg" class="bg"></div>
+    <div id="page2-bg" class="bg"></div>
 
-    <div class="canvas-area">
-        <h1>for my mendhak...</h1>
-
-        <div id="heartStage">
-            <div class="heart-btn" onclick="revealAsk()">💖</div>
-            <p class="tap-instruction">u da real art but pls tap this heart</p>
+    <div class="container">
+        
+        <div id="heart-section">
+            <h1>for my mendhak...</h1>
+            <div class="heart" onclick="showQuestion()">💖</div>
+            <p class="tap-text">u da real art but pls tap this heart</p>
         </div>
 
-        <div id="askStage" style="display:none;">
-            <div id="valentine-question">Will you be my Valentine? 🥺</div>
-            <button class="kawaii-btn" onclick="celebrate()">YES!</button>
-            <button class="kawaii-btn" id="noBtn" onmouseover="moveNo(this)">NO</button>
+        <div id="ask-section" style="display: none;">
+            <h1 id="question">Will you be my Valentine? 🥺</h1>
+            <div class="btn-group">
+                <button class="btn" onclick="sayYes()">YES!</button>
+                <button class="btn" id="no-btn" style="background: #444;" onmouseover="moveNo()">NO</button>
+            </div>
         </div>
+
     </div>
 
-    <div id="itin-overlay">
-        <iframe id="itinerary-music" src="" allow="autoplay"></iframe>
-    </div>
+    <iframe id="music-frame" src="" allow="autoplay"></iframe>
 
     <script>
-        function revealAsk() {
-            document.getElementById('heartStage').style.display = 'none';
-            document.getElementById('askStage').style.display = 'block';
+        function showQuestion() {
+            document.getElementById('heart-section').style.display = 'none';
+            document.getElementById('ask-section').style.display = 'block';
             confetti({ particleCount: 100, spread: 70 });
         }
 
-        function celebrate() {
-            document.getElementById('valentine-question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
-            document.getElementById('tux-speech').style.display = 'block';
+        function sayYes() {
+            document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
             confetti({ particleCount: 300, spread: 100 });
+            
+            // Start the music
+            document.getElementById('music-frame').src = "https://open.spotify.com/embed/track/1p80pS7S6zW6STC36zgn7T?utm_source=generator&autoplay=1";
 
-            // This sets the music to play
-            document.getElementById('itinerary-music').src = "
+            // Switch to bg2 after 4 seconds
+            setTimeout(() => {
+                document.getElementById('page1-bg').style.display = 'none';
+                document.getElementById('page2-bg').style.display = 'block';
+                document.getElementById('ask-section').style.display = 'none';
+            }, 4000);
+        }
+
+        function moveNo() {
+            const btn = document.getElementById('no-btn');
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * 80 + '%';
+            btn.style.top = Math.random() * 80 + '%';
+        }
+    </script>
+</body>
+</html>
