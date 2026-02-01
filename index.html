@@ -3,39 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>For My Mendhak 🐸</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@500;700&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; }
+        body, html { 
+            margin: 0; padding: 0; width: 100%; height: 100%; 
+            overflow: hidden; font-family: 'Montserrat', sans-serif; 
+        }
         
+        /* Frog Cursor on everything clickable */
+        .heart, .btn {
+            cursor: url('https://cdn-icons-png.flaticon.com/32/3069/3069174.png'), auto !important;
+        }
+
         /* The Backgrounds */
         .bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-size: 100% 100%; z-index: -1; }
         #page1-bg { background-image: url('bg.png'); display: block; }
         #page2-bg { background-image: url('bg2.png'); display: none; }
 
-        /* Main Content Box */
         .container {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            height: 100vh; text-align: center; color: #590D22;
+            height: 100vh; text-align: center;
+        }
+
+        h1 { 
+            font-family: 'Playfair Display', serif; font-style: italic; 
+            font-size: 3.5rem; color: #590D22; margin: 0; 
         }
 
         /* The Heart */
-        .heart { font-size: 120px; cursor: pointer; display: inline-block; transition: 0.3s; }
-        .heart:hover { transform: scale(1.1); }
+        .heart { font-size: 150px; display: inline-block; animation: heartbeat 1.2s infinite; margin: 20px 0; }
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
         
-        /* The Buttons */
-        .btn-group { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
-        .btn { 
-            padding: 15px 40px; font-size: 24px; font-weight: bold; cursor: pointer;
-            border-radius: 12px; border: none; background: #590D22; color: white;
+        .tap-text { font-family: 'Gaegu', cursive; font-size: 2.5rem; color: #C9184A; font-weight: bold; }
+
+        /* The Question Area */
+        #question { 
+            font-family: 'Gaegu', cursive; font-size: 6rem; 
+            color: #77BC1F; margin: 20px; font-weight: 700;
+            text-shadow: 3px 3px 0px white;
         }
 
-        /* Typography */
-        h1 { font-size: 3rem; margin-bottom: 10px; }
-        #question { font-size: 4rem; color: #77BC1F; margin: 20px; }
-        .tap-text { font-size: 1.5rem; font-weight: bold; color: #C9184A; }
-        
+        .btn-group { display: flex; gap: 30px; justify-content: center; margin-top: 20px; }
+        .btn { 
+            padding: 20px 60px; font-size: 2rem; font-weight: bold; 
+            border-radius: 15px; border: none; background: #590D22; color: white;
+            box-shadow: 0 5px 0px #3a0a18; transition: 0.2s;
+        }
+        .btn:active { transform: translateY(4px); box-shadow: none; }
+
         /* Hidden Music */
-        #music-frame { position: absolute; visibility: hidden; }
+        #music-frame { position: absolute; bottom: -1000px; visibility: hidden; }
     </style>
 </head>
 <body>
@@ -55,7 +73,7 @@
             <h1 id="question">Will you be my Valentine? 🥺</h1>
             <div class="btn-group">
                 <button class="btn" onclick="sayYes()">YES!</button>
-                <button class="btn" id="no-btn" style="background: #444;" onmouseover="moveNo()">NO</button>
+                <button class="btn" id="no-btn" style="background: #444; box-shadow: 0 5px 0px #222;" onmouseover="moveNo()">NO</button>
             </div>
         </div>
 
@@ -67,22 +85,22 @@
         function showQuestion() {
             document.getElementById('heart-section').style.display = 'none';
             document.getElementById('ask-section').style.display = 'block';
-            confetti({ particleCount: 100, spread: 70 });
+            confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
         }
 
         function sayYes() {
             document.getElementById('question').innerHTML = "YAY! I LOVE YOU! 🐸❤️";
-            confetti({ particleCount: 300, spread: 100 });
+            document.getElementById('question').style.color = "#C9184A";
+            confetti({ particleCount: 400, spread: 120, origin: { y: 0.6 } });
             
-            // Start the music
-            document.getElementById('music-frame').src = "https://open.spotify.com/embed/track/1p80pS7S6zW6STC36zgn7T?utm_source=generator&autoplay=1";
+            // Prime the music
+            document.getElementById('music-frame').src = "https://open.spotify.com/embed/track/6Xatp78atH9m749fPjD5iI?utm_source=generator&autoplay=1";
 
-            // Switch to bg2 after 4 seconds
             setTimeout(() => {
                 document.getElementById('page1-bg').style.display = 'none';
                 document.getElementById('page2-bg').style.display = 'block';
                 document.getElementById('ask-section').style.display = 'none';
-            }, 4000);
+            }, 5000);
         }
 
         function moveNo() {
