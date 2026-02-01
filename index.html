@@ -4,47 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>For My Mendhak 🐸</title>
-    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Montserrat:wght@300;500&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         :root {
             --night-bordeaux: #590D22;
             --dark-amaranth: #800F2F;
+            --cherry-rose: #A4133C;
             --rosewood: #C9184A;
             --bubblegum: #FF4D6D;
             --soft-pink: #FF758F;
+            --white: #FFF0F3;
         }
 
         body, html {
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
-            font-family: 'Gaegu', cursive;
             background-color: #f0f0f0;
+            font-family: 'Montserrat', sans-serif;
         }
 
-        /* The Tux Paint Background */
+        /* --- THE TUX PAINT BACKGROUND --- */
         .tux-bg {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('Screenshot 2026-02-01 174203.png'); /* Replace with your uploaded BG filename */
+            width: 100vw;
+            height: 100vh;
+            background-image: url('https://pagedemos.com/image_40e1f2.png'); 
             background-size: 100% 100%;
             background-repeat: no-repeat;
             z-index: 1;
         }
 
-        /* The "Canvas" area - where the content lives */
+        /* --- THE CENTER CANVAS AREA --- */
         .canvas-area {
             position: absolute;
-            top: 15%;     /* Aligns below the top toolbar */
-            left: 13%;    /* Aligns right of the tool sidebar */
-            width: 73%;   /* Keeps content inside the white space */
-            height: 65%;  /* Keeps content above the color palette */
+            top: 15%;     
+            left: 13%;    
+            width: 73%;   
+            height: 65%;  
             z-index: 2;
             display: flex;
             flex-direction: column;
@@ -58,132 +60,40 @@
 
         h1 {
             font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
+            font-style: italic;
+            font-size: 2.2rem;
             color: var(--dark-amaranth);
             margin: 0;
         }
 
-        /* Spotify - Placed top right of the canvas */
-        .spotify-wrapper {
-            width: 250px;
+        /* Spotify - Top Right of Canvas */
+        .spotify-container {
+            width: 260px;
             background: rgba(255, 255, 255, 0.9);
-            border: 3px solid #77BC1F; /* Matching the Tux Paint green */
+            border: 2px solid #77BC1F; /* Tux Paint green */
             border-radius: 15px;
-            padding: 5px;
+            padding: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         /* 6-Photo Gallery */
-        .gallery {
+        .gallery-container {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             width: 100%;
             overflow-x: auto;
-            padding: 10px 0;
+            padding: 15px 5px;
+            scrollbar-width: none;
         }
+        .gallery-container::-webkit-scrollbar { display: none; }
 
-        .card {
-            min-width: 140px;
-            height: 180px;
+        .photo-card {
+            min-width: 150px;
+            height: 200px;
             background: white;
-            border: 2px solid #ddd;
-            padding: 5px;
+            padding: 8px;
+            border-radius: 2px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transform: rotate(var(--r));
-            flex-shrink: 0;
-        }
-        .card img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Heart & Buttons */
-        .heart { font-size: 100px; cursor: pointer; animation: beat 1s infinite; }
-        .tap-text { font-size: 1.2rem; color: var(--rosewood); font-weight: bold; }
-
-        .btn {
-            background: var(--rosewood);
-            color: white;
-            border: none;
-            padding: 10px 30px;
-            border-radius: 10px;
-            font-family: 'Gaegu', cursive;
-            font-size: 1.5rem;
-            cursor: pointer;
-            margin: 10px;
-        }
-
-        /* Full Screen Itinerary Reveal */
-        #itin-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: white;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-        }
-        #itin-overlay img { max-width: 80%; border: 5px solid var(--bubblegum); }
-
-        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    </style>
-</head>
-<body>
-
-    <div class="tux-bg"></div>
-
-    <div class="canvas-area" id="mainContent">
-        <div class="spotify-wrapper">
-            <p style="margin:0; font-size: 0.8rem;">music that reminds me of you ♡</p>
-            <iframe src="http://googleusercontent.com/spotify.com/6" width="100%" height="80" frameBorder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>
-        </div>
-
-        <h1>for my mendhak ♡₊˚ 🐸・₊✧</h1>
-
-        <div class="gallery">
-            <div class="card" style="--r:-3deg;"><img src="https://via.placeholder.com/140x180"></div>
-            <div class="card" style="--r:2deg;"><img src="https://via.placeholder.com/140x180"></div>
-            <div class="card" style="--r:-2deg;"><img src="https://via.placeholder.com/140x180"></div>
-            <div class="card" style="--r:4deg;"><img src="https://via.placeholder.com/140x180"></div>
-            <div class="card" style="--r:-1deg;"><img src="https://via.placeholder.com/140x180"></div>
-            <div class="card" style="--r:3deg;"><img src="https://via.placeholder.com/140x180"></div>
-        </div>
-
-        <div id="heartStage">
-            <div class="heart" onclick="showAsk()">💖</div>
-            <p class="tap-text">u tap my heart :3</p>
-        </div>
-
-        <div id="askStage" style="display:none;">
-            <h2 id="msg">Will you be my Valentine?</h2>
-            <button class="btn" onclick="done()">Yes!</button>
-            <button class="btn" id="noBtn" onmouseover="run(this)">No</button>
-        </div>
-    </div>
-
-    <div id="itin-overlay">
-        <h2>our itinerary .𓏲⊹₊˚🪷.˚₊𓆏</h2>
-        <img src="YOUR_ITINERARY_IMAGE.jpg" alt="Itinerary">
-    </div>
-
-    <script>
-        function showAsk() {
-            document.getElementById('heartStage').style.display = 'none';
-            document.getElementById('askStage').style.display = 'block';
-            confetti();
-        }
-
-        function done() {
-            document.getElementById('msg').innerHTML = "omg yes i love you pls go out with me on the 14th .𓏲⊹₊˚🪷.˚₊𓆏";
-            confetti({ particleCount: 150, spread: 100 });
-            
-            setTimeout(() => {
-                document.getElementById('itin-overlay').style.display = 'flex';
-            }, 5000);
-        }
-
-        function run(b) {
-            b.style.position = 'fixed';
-            b.style.left = Math.random() * 80 + '%';
-            b.style.top = Math.random() * 80 + '%';
-        }
-    </script>
-</body>
-</html>
-
+            transition: 0.3s;
+            border: 1px solid var(--soft-pink);
